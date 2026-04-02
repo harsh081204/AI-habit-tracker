@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Habit Tracker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #a78bfa;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: #1e2130;
+      border: 1px solid #2d3148;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      background: #0f1117;
+      border: 1px solid #2d3148;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      padding: 12px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+    textarea:focus { border-color: #7c3aed; }
+
+    button#submitBtn {
+      margin-top: 14px;
+      width: 100%;
+      padding: 12px;
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button#submitBtn:hover:not(:disabled) { background: #6d28d9; }
+    button#submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    #status {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      min-height: 20px;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* ── Result panel ── */
+    #result {
+      margin-top: 24px;
+      width: 100%;
+      max-width: 680px;
+      display: none;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .narrative {
+      background: #1e2130;
+      border: 1px solid #2d3148;
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .pill {
+      background: #2d3148;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      color: #a5b4fc;
+    }
+
+    .pill.mood { background: #1e3a5f; color: #7dd3fc; }
+    .pill.score { background: #1a2e1a; color: #86efac; }
+
+    .entries-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .entry-card {
+      background: #1e2130;
+      border: 1px solid #2d3148;
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .entry-type {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #312e81;
+      color: #a5b4fc;
+      white-space: nowrap;
+    }
+    .entry-type.gym    { background: #14532d; color: #86efac; }
+    .entry-type.social { background: #3b1f5c; color: #d8b4fe; }
+    .entry-type.sleep  { background: #1e3a5f; color: #7dd3fc; }
+    .entry-type.food   { background: #451a03; color: #fdba74; }
+    .entry-type.leisure{ background: #422006; color: #fcd34d; }
+
+    .entry-detail { font-size: 0.88rem; color: #94a3b8; }
+    .entry-status-done    { margin-left: auto; font-size: 0.75rem; color: #86efac; }
+    .entry-status-pending { margin-left: auto; font-size: 0.75rem; color: #fcd34d; }
+    .entry-status-maybe   { margin-left: auto; font-size: 0.75rem; color: #94a3b8; }
+
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      background: #2d3148;
+      color: #cbd5e1;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .section { margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+  <h1>AI Habit Tracker</h1>
+  <p class="subtitle">Write your day in plain English. The AI will parse and save it.</p>
+
+  <div class="card">
+    <label for="journalInput">What happened today?</label>
+    <textarea
+      id="journalInput"
+      placeholder="e.g. woke up at 8, did leetcode for 2 hours, had lunch with Priya, went to gym (chest day), studied system design in the evening, scrolled instagram, slept at 1am"
+    ></textarea>
+    <button id="submitBtn" onclick="submitJournal()">Analyse &amp; Save</button>
+    <div id="status"></div>
+  </div>
+
+  <div id="result"></div>
+
+  <script>
+    async function submitJournal() {
+      // Check if running from file:// which blocks fetch
+      if (window.location.protocol === 'file:') {
+        alert("Error: You are opening the file directly from your disk. \n\nPlease visit http://localhost:8000 in your browser instead.");
+        return;
+      }
+
+      const text = document.getElementById("journalInput").value.trim();
+      const btn  = document.getElementById("submitBtn");
+      const statusEl = document.getElementById("status");
+      const resultEl = document.getElementById("result");
+
+      if (!text) { statusEl.textContent = "Please write something first."; return; }
+
+      btn.disabled = true;
+      statusEl.textContent = "Processing through AI…";
+      resultEl.style.display = "none";
+      resultEl.innerHTML = "";
+
+      try {
+        const res = await fetch("/api/journal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ raw_text: text }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || "Server error");
+        }
+
+        const doc = await res.json();
+        statusEl.textContent = "✓ Saved successfully";
+        renderResult(doc, resultEl);
+
+      } catch (e) {
+        statusEl.textContent = "Error: " + e.message;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function renderResult(doc, el) {
+      const p = doc.parsed;
+      const meta = p.meta;
+      const entries = p.entries || [];
+
+      let html = "";
+
+      // Narrative
+      html += `<div class="section">
+        <div class="section-title">Journal Summary</div>
+        <div class="narrative">${doc.journal_text || "—"}</div>
+      </div>`;
+
+      // Meta pills
+      const mood  = meta.mood ? `<span class="pill mood">😶 ${meta.mood}</span>` : "";
+      const score = meta.productivity_score !== null && meta.productivity_score !== undefined
+        ? `<span class="pill score">⚡ Productivity: ${Math.round(meta.productivity_score * 100)}%</span>`
+        : "";
+      const prof  = meta.inferred_profile
+        ? `<span class="pill">🧠 ${meta.inferred_profile}</span>`
+        : "";
+      html += `<div class="meta-row">${mood}${score}${prof}</div>`;
+
+      // Entries
+      if (entries.length) {
+        html += `<div class="section"><div class="section-title">Activities</div><div class="entries-grid">`;
+        entries.forEach(e => {
+          const typeClass = ["gym","social","sleep","food","leisure"].includes(e.type) ? e.type : "";
+          const hint = [e.time_hint, e.duration_mins ? e.duration_mins + " min" : null]
+            .filter(Boolean).join(" · ");
+          const statusClass = `entry-status-${e.status}`;
+          const statusLabel = e.status === "done" ? "✓ done" : e.status === "pending" ? "⏳ pending" : "? maybe";
+          html += `<div class="entry-card">
+            <span class="entry-type ${typeClass}">${e.type}</span>
+            <span class="entry-detail">${hint || "—"}</span>
+            <span class="${statusClass}">${statusLabel}</span>
+          </div>`;
+        });
+        html += `</div></div>`;
+      }
+
+      // Skills
+      if (p.skills_touched && p.skills_touched.length) {
+        const tags = p.skills_touched.map(s =>
+          `<span class="tag">🔧 ${s.name}${s.subtopic ? " · " + s.subtopic : ""}</span>`
+        ).join("");
+        html += `<div class="section"><div class="section-title">Skills Touched</div><div class="tags-row">${tags}</div></div>`;
+      }
+
+      // People & Places
+      if (p.people_met && p.people_met.length) {
+        const tags = p.people_met.map(n => `<span class="tag">👤 ${n}</span>`).join("");
+        html += `<div class="section"><div class="section-title">People</div><div class="tags-row">${tags}</div></div>`;
+      }
+      if (p.places_visited && p.places_visited.length) {
+        const tags = p.places_visited.map(n => `<span class="tag">📍 ${n}</span>`).join("");
+        html += `<div class="section"><div class="section-title">Places</div><div class="tags-row">${tags}</div></div>`;
+      }
+
+      el.innerHTML = html;
+      el.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

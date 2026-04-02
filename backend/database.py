@@ -1,6 +1,7 @@
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
+import certifi
 
 load_dotenv()
 
@@ -12,10 +13,13 @@ _client: AsyncIOMotorClient | None = None
 
 
 def get_client() -> AsyncIOMotorClient:
-    """Return the shared MongoDB client, creating it if needed."""
     global _client
     if _client is None:
-        _client = AsyncIOMotorClient(MONGO_URI)
+        _client = AsyncIOMotorClient(
+            MONGO_URI,
+            tlsCAFile=certifi.where(),
+            serverSelectionTimeoutMS=5000  # Fail fast if connection fails
+        )
     return _client
 
 
