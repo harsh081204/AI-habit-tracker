@@ -1,10 +1,13 @@
+import os
+import sys
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from contextlib import asynccontextmanager
-import os
+
+# Add the current directory so Vercel can find database, ai_processer, etc.
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from database import connect_db, close_db, journals_col
 from journal_service import create_journal_entry
