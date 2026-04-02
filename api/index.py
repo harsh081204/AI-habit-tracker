@@ -66,12 +66,4 @@ async def get_journals(limit: int = 10):
     return results
 
 
-# ── Serve frontend ────────────────────────────────────────────────────────────
-
-FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend")
-
-app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
-
-@app.get("/")
-async def serve_index():
-    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+# That's it! API only now.
