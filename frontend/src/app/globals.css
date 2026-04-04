@@ -9,6 +9,8 @@
   --c-green: #a8c675;
   --c-navy: #212844;
   --c-blue: #2081c3;
+  --c-error: #d94040;
+  --c-success: #3a7d1e;
   --font-display: var(--font-dm-serif-display);
   --font-body: var(--font-dm-sans);
   --font-mono: var(--font-dm-mono);
