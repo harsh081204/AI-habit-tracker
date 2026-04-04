@@ -3,9 +3,29 @@
 import styles from "../auth.module.css";
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const [showPw, setShowPw] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login, loading } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    
+    if (!email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    const res = await login(email, password);
+    if (!res.success) {
+      setError(res.error || "Login failed. Please check your credentials.");
+    }
+  };
 
   return (
     <>
@@ -14,19 +34,45 @@ export default function LoginPage() {
         <Link href="/signup" className={styles.tab}>Sign up</Link>
       </div>
 
-      <div id="login-form">
+      <form id="login-form" onSubmit={handleSubmit}>
         <h1 className={styles.formTitle}>Welcome back</h1>
         <p className={styles.formSub}>Log in to continue your journaling streak.</p>
 
+        {error && (
+          <div style={{ 
+            padding: '10px', 
+            background: 'rgba(217, 64, 64, 0.1)', 
+            color: 'var(--c-error)', 
+            borderRadius: '8px', 
+            fontSize: '12px', 
+            marginBottom: '1rem',
+            border: '1px solid rgba(217, 64, 64, 0.2)'
+          }}>
+            {error}
+          </div>
+        )}
+
         <div className={styles.field}>
           <label className={styles.label}>Email</label>
-          <input type="email" className="input" placeholder="you@example.com" />
+          <input 
+            type="email" 
+            className="input" 
+            placeholder="you@example.com" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
 
         <div className={styles.field}>
           <label className={styles.label}>Password</label>
           <div className={styles.pwWrap}>
-            <input type={showPw ? "text" : "password"} className="input" placeholder="Your password" />
+            <input 
+              type={showPw ? "text" : "password"} 
+              className="input" 
+              placeholder="Your password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <button 
               className={styles.pwToggle} 
               onClick={() => setShowPw(!showPw)}
@@ -44,7 +90,14 @@ export default function LoginPage() {
           <a href="#" style={{ fontSize: '12px', color: 'var(--c-blue)', textDecoration: 'none' }}>Forgot password?</a>
         </div>
 
-        <button className="btn btn-primary" style={{ width: '100%', padding: '12px', marginBottom: '1.25rem' }}>Log in</button>
+        <button 
+          className="btn btn-primary" 
+          style={{ width: '100%', padding: '12px', marginBottom: '1.25rem' }}
+          disabled={loading}
+          type="submit"
+        >
+          {loading ? "Logging in..." : "Log in"}
+        </button>
 
         <div className={styles.orRow}>
           <div className={styles.orLine}></div>
@@ -52,7 +105,7 @@ export default function LoginPage() {
           <div className={styles.orLine}></div>
         </div>
 
-        <button className={styles.btnGoogle}>
+        <button className={styles.btnGoogle} type="button">
           <svg className={styles.gIcon} width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
             <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
@@ -63,7 +116,7 @@ export default function LoginPage() {
         </button>
 
         <p className={styles.switchText}>Don't have an account? <Link href="/signup">Sign up free</Link></p>
-      </div>
+      </form>
     </>
   );
 }

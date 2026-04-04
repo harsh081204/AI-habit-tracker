@@ -3,10 +3,17 @@
 import styles from "../auth.module.css";
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SignupPage() {
   const [showPw, setShowPw] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [error, setError] = useState("");
+  const { signup, loading } = useAuth();
 
   const getStrength = (v) => {
     let score = 0;
@@ -21,6 +28,31 @@ export default function SignupPage() {
   const colors = ['#d94040','#e4a000','#2081c3','#a8c675'];
   const labels = ['weak','fair','good','strong'];
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!firstName || !lastName || !email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    if (!agreed) {
+      setError("You must agree to the Terms of Service.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+
+    const res = await signup({ firstName, lastName, email, password });
+    if (!res.success) {
+      setError(res.error || "Signup failed. Please try again.");
+    }
+  };
+
   return (
     <>
       <div className={styles.tabRow}>
@@ -28,24 +60,56 @@ export default function SignupPage() {
         <Link href="/signup" className={`${styles.tab} ${styles.tabActive}`}>Sign up</Link>
       </div>
 
-      <div id="signup-form">
+      <form id="signup-form" onSubmit={handleSubmit}>
         <h1 className={styles.formTitle}>Create account</h1>
         <p className={styles.formSub}>Start tracking your days in under a minute.</p>
+
+        {error && (
+          <div style={{ 
+            padding: '10px', 
+            background: 'rgba(217, 64, 64, 0.1)', 
+            color: 'var(--c-error)', 
+            borderRadius: '8px', 
+            fontSize: '12px', 
+            marginBottom: '1rem',
+            border: '1px solid rgba(217, 64, 64, 0.2)'
+          }}>
+            {error}
+          </div>
+        )}
 
         <div className={styles.fieldRow} style={{ marginBottom: '1rem' }}>
           <div className={styles.field} style={{ marginBottom: 0 }}>
             <label className={styles.label}>First name</label>
-            <input type="text" className="input" placeholder="Rahul" />
+            <input 
+              type="text" 
+              className="input" 
+              placeholder="Rahul" 
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
           </div>
           <div className={styles.field} style={{ marginBottom: 0 }}>
             <label className={styles.label}>Last name</label>
-            <input type="text" className="input" placeholder="Kumar" />
+            <input 
+              type="text" 
+              className="input" 
+              placeholder="Kumar" 
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </div>
         </div>
 
         <div className={styles.field}>
           <label className={styles.label}>Email</label>
-          <input type="email" className="input" placeholder="you@example.com" />
+          <input 
+            type="email" 
+            className="input" 
+            placeholder="you@example.com" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
 
         <div className={styles.field}>
@@ -94,13 +158,26 @@ export default function SignupPage() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '1.25rem' }}>
-          <input type="checkbox" id="s-terms" style={{ width: '15px', height: '15px', marginTop: '1px' }} />
+          <input 
+            type="checkbox" 
+            id="s-terms" 
+            style={{ width: '15px', height: '15px', marginTop: '1px' }} 
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+          />
           <label htmlFor="s-terms" style={{ fontSize: '12px', color: 'rgba(33,40,68,0.55)', lineHeight: 1.5 }}>
             I agree to the <a href="#" style={{ color: 'var(--c-blue)', textDecoration: 'none' }}>Terms of Service</a> and <a href="#" style={{ color: 'var(--c-blue)', textDecoration: 'none' }}>Privacy Policy</a>
           </label>
         </div>
 
-        <button className="btn btn-primary" style={{ width: '100%', padding: '12px', marginBottom: '1.25rem' }}>Create account</button>
+        <button 
+          className="btn btn-primary" 
+          style={{ width: '100%', padding: '12px', marginBottom: '1.25rem' }}
+          disabled={loading}
+          type="submit"
+        >
+          {loading ? "Creating account..." : "Create account"}
+        </button>
 
         <div className={styles.orRow}>
           <div className={styles.orLine}></div>
@@ -108,7 +185,7 @@ export default function SignupPage() {
           <div className={styles.orLine}></div>
         </div>
 
-        <button className={styles.btnGoogle}>
+        <button className={styles.btnGoogle} type="button">
           <svg className={styles.gIcon} width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
             <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
@@ -119,7 +196,7 @@ export default function SignupPage() {
         </button>
 
         <p className={styles.switchText}>Already have an account? <Link href="/login">Log in</Link></p>
-      </div>
+      </form>
     </>
   );
 }
