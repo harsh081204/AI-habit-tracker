@@ -1,0 +1,441 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--cream:#fffff4;--yellow:#fffed7;--green:#a8c675;--navy:#212844;--blue:#2081c3;--f-display:'DM Serif Display',serif;--f-body:'DM Sans',sans-serif;--f-mono:'DM Mono',monospace;}
+body{font-family:var(--f-body);background:var(--cream);color:var(--navy);}
+
+.shell{display:grid;grid-template-rows:auto 1fr;min-height:700px;}
+.topbar{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:52px;}
+.tb-logo{font-family:var(--f-display);font-size:19px;color:var(--cream);letter-spacing:-0.02em;}
+.tb-logo span{color:var(--green);}
+.tb-nav{display:flex;align-items:center;gap:1.5rem;}
+.tb-link{font-size:13px;color:rgba(255,255,244,0.5);text-decoration:none;background:none;border:none;cursor:pointer;font-family:var(--f-body);transition:color 0.15s;}
+.tb-link:hover{color:var(--cream);}
+.tb-link.active{color:var(--green);}
+.tb-avatar{width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--navy);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+
+.page{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem;width:100%;}
+
+/* PROFILE HEADER */
+.profile-header{display:grid;grid-template-columns:auto 1fr auto;gap:1.5rem;align-items:center;background:white;border:1px solid rgba(33,40,68,0.08);border-radius:20px;padding:1.75rem 2rem;margin-bottom:1.5rem;}
+.avatar-wrap{position:relative;}
+.avatar-lg{width:72px;height:72px;border-radius:50%;background:var(--navy);color:var(--cream);font-family:var(--f-display);font-size:26px;display:flex;align-items:center;justify-content:center;letter-spacing:-0.02em;}
+.avatar-badge{position:absolute;bottom:2px;right:2px;width:16px;height:16px;background:var(--green);border-radius:50%;border:2px solid white;display:flex;align-items:center;justify-content:center;}
+.profile-info{}
+.profile-name{font-family:var(--f-display);font-size:26px;color:var(--navy);letter-spacing:-0.02em;margin-bottom:3px;}
+.profile-email{font-size:13px;color:rgba(33,40,68,0.45);margin-bottom:8px;}
+.profile-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.ptag{font-size:11px;padding:3px 10px;border-radius:999px;font-family:var(--f-mono);}
+.ptag-green{background:rgba(168,198,117,0.15);color:#3a5a10;}
+.ptag-blue{background:rgba(32,129,195,0.1);color:#145585;}
+.ptag-navy{background:rgba(33,40,68,0.07);color:var(--navy);}
+.profile-actions{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+.btn-edit-profile{padding:8px 18px;background:transparent;color:var(--navy);border:1.5px solid rgba(33,40,68,0.2);border-radius:8px;font-family:var(--f-body);font-size:13px;cursor:pointer;transition:all 0.15s;font-weight:400;}
+.btn-edit-profile:hover{border-color:var(--navy);}
+.member-since{font-size:11px;font-family:var(--f-mono);color:rgba(33,40,68,0.3);}
+
+/* SECTION LABEL */
+.sec-label{font-family:var(--f-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(33,40,68,0.35);margin-bottom:0.75rem;}
+
+/* STAT CARDS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;}
+.stat-card{background:white;border:1px solid rgba(33,40,68,0.08);border-radius:14px;padding:1.1rem 1rem;}
+.stat-card-navy{background:var(--navy);border:none;}
+.stat-card-yellow{background:var(--yellow);border:1px solid rgba(33,40,68,0.07);}
+.stat-val{font-family:var(--f-display);font-size:30px;line-height:1;margin-bottom:4px;}
+.stat-lbl{font-size:11px;color:rgba(33,40,68,0.45);}
+.stat-sub{font-size:10px;font-family:var(--f-mono);margin-top:4px;}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem;}
+
+/* CARD */
+.card{background:white;border:1px solid rgba(33,40,68,0.08);border-radius:14px;padding:1.25rem;}
+
+/* STREAK CALENDAR */
+.streak-grid{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin-top:0.75rem;}
+.streak-cell{aspect-ratio:1;border-radius:3px;}
+
+/* PRODUCTIVITY CHART */
+.prod-chart{margin-top:0.75rem;position:relative;height:80px;}
+.prod-bars{display:flex;align-items:flex-end;gap:4px;height:72px;}
+.prod-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.prod-bar{width:100%;border-radius:3px 3px 0 0;transition:height 0.3s ease;cursor:pointer;min-height:3px;}
+.prod-bar:hover{opacity:0.8;}
+.prod-bar-lbl{font-size:8px;font-family:var(--f-mono);color:rgba(33,40,68,0.3);}
+.prod-avg-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(33,40,68,0.2);pointer-events:none;}
+
+/* SKILLS */
+.skills-list{display:flex;flex-direction:column;gap:8px;margin-top:0.75rem;}
+.skill-row{display:flex;align-items:center;gap:8px;}
+.skill-name{font-size:12px;color:var(--navy);width:110px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.skill-track{flex:1;height:6px;background:rgba(33,40,68,0.07);border-radius:3px;overflow:hidden;}
+.skill-fill{height:100%;border-radius:3px;}
+.skill-count{font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.35);width:24px;text-align:right;}
+
+/* MOOD DISTRIBUTION */
+.mood-bars{display:flex;flex-direction:column;gap:7px;margin-top:0.75rem;}
+.mood-row-item{display:flex;align-items:center;gap:8px;}
+.mood-name{font-size:12px;color:var(--navy);width:80px;flex-shrink:0;}
+.mood-track{flex:1;height:8px;background:rgba(33,40,68,0.06);border-radius:4px;overflow:hidden;}
+.mood-fill{height:100%;border-radius:4px;}
+.mood-pct{font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.4);width:28px;text-align:right;}
+
+/* PEOPLE */
+.people-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:0.75rem;}
+.person-chip{display:flex;align-items:center;gap:7px;padding:6px 12px 6px 6px;background:rgba(33,40,68,0.04);border-radius:999px;border:1px solid rgba(33,40,68,0.07);}
+.person-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;font-family:var(--f-body);flex-shrink:0;}
+.person-name{font-size:12px;color:var(--navy);}
+.person-count{font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.35);}
+
+/* ACTIVITY TYPE */
+.activity-donut-wrap{display:flex;align-items:center;gap:1.5rem;margin-top:0.75rem;}
+.donut-legend{display:flex;flex-direction:column;gap:6px;flex:1;}
+.legend-row{display:flex;align-items:center;gap:7px;}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.legend-label{font-size:12px;color:var(--navy);flex:1;}
+.legend-pct{font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.4);}
+
+/* RECENT ENTRIES LIST */
+.recent-list{display:flex;flex-direction:column;gap:6px;margin-top:0.75rem;}
+.recent-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(33,40,68,0.02);border:1px solid rgba(33,40,68,0.06);cursor:pointer;transition:background 0.12s;}
+.recent-item:hover{background:rgba(33,40,68,0.05);}
+.ri-date{font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.35);width:70px;}
+.ri-title{font-size:13px;color:var(--navy);flex:1;}
+.ri-score{font-family:var(--f-display);font-size:14px;}
+
+/* EDIT MODAL OVERLAY */
+.modal-overlay{position:fixed;inset:0;background:rgba(33,40,68,0.4);display:none;align-items:center;justify-content:center;z-index:100;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--cream);border-radius:20px;padding:2rem;width:100%;max-width:420px;}
+.modal-title{font-family:var(--f-display);font-size:22px;color:var(--navy);margin-bottom:1.5rem;}
+.modal-field{margin-bottom:1rem;}
+.modal-field label{display:block;font-size:12px;font-weight:500;margin-bottom:4px;color:var(--navy);}
+.modal-field input{width:100%;padding:9px 12px;border:1.5px solid rgba(33,40,68,0.15);border-radius:8px;font-family:var(--f-body);font-size:14px;color:var(--navy);background:white;outline:none;}
+.modal-field input:focus{border-color:var(--blue);}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:1.5rem;}
+.btn-cancel{padding:9px 18px;background:transparent;border:1.5px solid rgba(33,40,68,0.15);border-radius:8px;font-family:var(--f-body);font-size:13px;cursor:pointer;color:var(--navy);}
+.btn-save{padding:9px 18px;background:var(--navy);color:var(--cream);border:none;border-radius:8px;font-family:var(--f-body);font-size:13px;cursor:pointer;font-weight:500;}
+</style>
+
+<div class="shell">
+  <div class="topbar">
+    <span class="tb-logo">day<span>log</span></span>
+    <div class="tb-nav">
+      <button class="tb-link">Journal</button>
+      <button class="tb-link active">Profile</button>
+      <div class="tb-avatar">RK</div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="profile-header">
+      <div class="avatar-wrap">
+        <div class="avatar-lg">RK</div>
+        <div class="avatar-badge">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="profile-info">
+        <div class="profile-name" id="display-name">Rahul Kumar</div>
+        <div class="profile-email" id="display-email">rahul.kumar@example.com</div>
+        <div class="profile-tags">
+          <span class="ptag ptag-green">cs_student</span>
+          <span class="ptag ptag-blue">IIT Delhi</span>
+          <span class="ptag ptag-navy">42 entries</span>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn-edit-profile" onclick="openModal()">Edit profile</button>
+        <span class="member-since">member since Jan 2026</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card stat-card-navy">
+        <div class="stat-val" style="color:var(--green);">42</div>
+        <div class="stat-lbl" style="color:rgba(255,255,244,0.45);">Total entries</div>
+        <div class="stat-sub" style="color:rgba(255,255,244,0.25);">+6 this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color:var(--navy);">13</div>
+        <div class="stat-lbl">Current streak</div>
+        <div class="stat-sub" style="color:var(--green);">best: 19 days</div>
+      </div>
+      <div class="stat-card stat-card-yellow">
+        <div class="stat-val" style="color:var(--navy);">0.74</div>
+        <div class="stat-lbl">Avg productivity</div>
+        <div class="stat-sub" style="color:rgba(33,40,68,0.4);">this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color:var(--blue);">284</div>
+        <div class="stat-lbl">Skills logged</div>
+        <div class="stat-sub" style="color:rgba(33,40,68,0.35);">across 18 topics</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="sec-label">Activity streak — last 30 days</div>
+        <div class="streak-grid" id="streak-grid"></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:10px;">
+          <span style="font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.3);">less</span>
+          <div style="width:10px;height:10px;border-radius:2px;background:rgba(33,40,68,0.07);"></div>
+          <div style="width:10px;height:10px;border-radius:2px;background:rgba(168,198,117,0.3);"></div>
+          <div style="width:10px;height:10px;border-radius:2px;background:rgba(168,198,117,0.6);"></div>
+          <div style="width:10px;height:10px;border-radius:2px;background:var(--green);"></div>
+          <span style="font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.3);">more</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-label">Productivity — last 14 entries</div>
+        <div class="prod-chart">
+          <div class="prod-bars" id="prod-bars"></div>
+          <div class="prod-avg-line" id="avg-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="sec-label">Top skills touched</div>
+        <div class="skills-list" id="skills-list"></div>
+      </div>
+      <div class="card">
+        <div class="sec-label">Mood distribution</div>
+        <div class="mood-bars" id="mood-bars"></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="sec-label">People met most</div>
+        <div class="people-grid" id="people-grid"></div>
+      </div>
+      <div class="card">
+        <div class="sec-label">Activity breakdown</div>
+        <div class="activity-donut-wrap">
+          <canvas id="donut-canvas" width="90" height="90"></canvas>
+          <div class="donut-legend" id="donut-legend"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="sec-label">Recent entries</div>
+      <div class="recent-list" id="recent-list"></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-title">Edit profile</div>
+    <div class="modal-field"><label>First name</label><input id="edit-fname" value="Rahul"/></div>
+    <div class="modal-field"><label>Last name</label><input id="edit-lname" value="Kumar"/></div>
+    <div class="modal-field"><label>Email</label><input id="edit-email" value="rahul.kumar@example.com"/></div>
+    <div class="modal-field"><label>Profile type</label><input id="edit-profile" value="cs_student"/></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveProfile()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var scores=[0.4,0.7,0.8,0.6,0.9,0.5,0.8,0.7,0.3,0.9,0.8,0.6,0.75,0.8];
+var days=30;
+
+function renderStreak(){
+  var g=document.getElementById('streak-grid');
+  g.innerHTML='';
+  var pattern=[0,1,2,3,2,1,3,0,2,3,3,1,0,2,3,2,1,3,2,3,0,1,3,2,3,3,2,1,3,3];
+  var colors=['rgba(33,40,68,0.07)','rgba(168,198,117,0.3)','rgba(168,198,117,0.6)','#a8c675'];
+  for(var i=0;i<30;i++){
+    var c=document.createElement('div');
+    c.className='streak-cell';
+    c.style.background=colors[pattern[i]];
+    c.title='Day '+(i+1);
+    g.appendChild(c);
+  }
+}
+
+function renderProdChart(){
+  var container=document.getElementById('prod-bars');
+  container.innerHTML='';
+  var labels=['M','T','W','T','F','S','S','M','T','W','T','F','S','S'];
+  var max=72;
+  var avg=scores.reduce(function(a,b){return a+b;},0)/scores.length;
+  scores.forEach(function(s,i){
+    var wrap=document.createElement('div');
+    wrap.className='prod-bar-wrap';
+    var bar=document.createElement('div');
+    bar.className='prod-bar';
+    var h=Math.round(s*max);
+    bar.style.height=h+'px';
+    bar.style.background=s>=0.7?'var(--green)':s>=0.5?'#e4a000':'rgba(33,40,68,0.2)';
+    bar.title='Score: '+s.toFixed(1);
+    var lbl=document.createElement('div');
+    lbl.className='prod-bar-lbl';
+    lbl.textContent=labels[i];
+    wrap.appendChild(bar);
+    wrap.appendChild(lbl);
+    container.appendChild(wrap);
+  });
+  var avgLine=document.getElementById('avg-line');
+  var pct=(1-avg)*100;
+  avgLine.style.top=Math.round(pct*0.72)+'px';
+}
+
+function renderSkills(){
+  var skills=[
+    {name:'system design',count:18,max:18},
+    {name:'rate limiter',count:12,max:18},
+    {name:'leetcode / dsa',count:10,max:18},
+    {name:'distributed sys',count:8,max:18},
+    {name:'os concepts',count:6,max:18},
+    {name:'networking',count:4,max:18},
+  ];
+  var c=document.getElementById('skills-list');
+  c.innerHTML='';
+  skills.forEach(function(s){
+    var row=document.createElement('div');
+    row.className='skill-row';
+    var pct=Math.round((s.count/s.max)*100);
+    row.innerHTML='<div class="skill-name">'+s.name+'</div>'
+      +'<div class="skill-track"><div class="skill-fill" style="width:'+pct+'%;background:var(--blue);"></div></div>'
+      +'<div class="skill-count">'+s.count+'</div>';
+    c.appendChild(row);
+  });
+}
+
+function renderMoods(){
+  var moods=[
+    {name:'productive',pct:38,color:'#a8c675'},
+    {name:'happy',pct:22,color:'#2081c3'},
+    {name:'neutral',pct:18,color:'rgba(33,40,68,0.3)'},
+    {name:'tired',pct:14,color:'#e4a000'},
+    {name:'anxious',pct:8,color:'#d94040'},
+  ];
+  var c=document.getElementById('mood-bars');
+  c.innerHTML='';
+  moods.forEach(function(m){
+    var row=document.createElement('div');
+    row.className='mood-row-item';
+    row.innerHTML='<div class="mood-name">'+m.name+'</div>'
+      +'<div class="mood-track"><div class="mood-fill" style="width:'+m.pct+'%;background:'+m.color+';"></div></div>'
+      +'<div class="mood-pct">'+m.pct+'%</div>';
+    c.appendChild(row);
+  });
+}
+
+function renderPeople(){
+  var people=[
+    {initials:'PS',name:'Priya S.',count:14,bg:'#2081c3',fg:'white'},
+    {initials:'AV',name:'Arjun V.',count:9,bg:'#212844',fg:'#fffff4'},
+    {initials:'RN',name:'Rohan N.',count:6,bg:'#a8c675',fg:'#212844'},
+    {initials:'SK',name:'Sneha K.',count:4,bg:'#fffed7',fg:'#212844'},
+    {initials:'MK',name:'Manav K.',count:3,bg:'rgba(33,40,68,0.1)',fg:'#212844'},
+  ];
+  var c=document.getElementById('people-grid');
+  c.innerHTML='';
+  people.forEach(function(p){
+    var chip=document.createElement('div');
+    chip.className='person-chip';
+    chip.innerHTML='<div class="person-av" style="background:'+p.bg+';color:'+p.fg+';">'+p.initials+'</div>'
+      +'<div class="person-name">'+p.name+'</div>'
+      +'<div class="person-count">×'+p.count+'</div>';
+    c.appendChild(chip);
+  });
+}
+
+function renderDonut(){
+  var canvas=document.getElementById('donut-canvas');
+  var ctx=canvas.getContext('2d');
+  var data=[
+    {label:'study',pct:32,color:'#2081c3'},
+    {label:'gym',pct:20,color:'#a8c675'},
+    {label:'social',pct:18,color:'#212844'},
+    {label:'leisure',pct:15,color:'#fffed7'},
+    {label:'coding',pct:15,color:'rgba(33,40,68,0.25)'},
+  ];
+  var cx=45,cy=45,r=38,inner=24;
+  var start=-Math.PI/2;
+  data.forEach(function(d){
+    var slice=(d.pct/100)*2*Math.PI;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,start,start+slice);
+    ctx.closePath();
+    ctx.fillStyle=d.color;
+    ctx.fill();
+    start+=slice;
+  });
+  ctx.beginPath();
+  ctx.arc(cx,cy,inner,0,2*Math.PI);
+  ctx.fillStyle='#fffff4';
+  ctx.fill();
+  ctx.font='500 11px DM Sans, sans-serif';
+  ctx.fillStyle='#212844';
+  ctx.textAlign='center';
+  ctx.fillText('42',cx,cy+2);
+  ctx.font='400 7px DM Mono, monospace';
+  ctx.fillStyle='rgba(33,40,68,0.4)';
+  ctx.fillText('entries',cx,cy+11);
+
+  var leg=document.getElementById('donut-legend');
+  leg.innerHTML='';
+  data.forEach(function(d){
+    var row=document.createElement('div');
+    row.className='legend-row';
+    row.innerHTML='<div class="legend-dot" style="background:'+d.color+';"></div>'
+      +'<div class="legend-label">'+d.label+'</div>'
+      +'<div class="legend-pct">'+d.pct+'%</div>';
+    leg.appendChild(row);
+  });
+}
+
+function renderRecent(){
+  var entries=[
+    {date:'Apr 3',title:'Focused and productive',score:0.8,color:'var(--green)'},
+    {date:'Apr 2',title:'System design mock with Arjun',score:0.9,color:'var(--green)'},
+    {date:'Apr 1',title:'Chill day',score:0.3,color:'rgba(33,40,68,0.25)'},
+    {date:'Mar 31',title:'Deep work on OS concepts',score:0.85,color:'var(--green)'},
+    {date:'Mar 30',title:'Tired — skipped gym',score:0.4,color:'#e4a000'},
+  ];
+  var c=document.getElementById('recent-list');
+  c.innerHTML='';
+  entries.forEach(function(e){
+    var item=document.createElement('div');
+    item.className='recent-item';
+    item.innerHTML='<div class="ri-date">'+e.date+'</div>'
+      +'<div class="ri-title">'+e.title+'</div>'
+      +'<div class="ri-score" style="color:'+e.color+';">'+e.score.toFixed(1)+'</div>';
+    c.appendChild(item);
+  });
+}
+
+function openModal(){document.getElementById('modal-overlay').classList.add('show');}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('show');}
+function closeModalOutside(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+function saveProfile(){
+  var fn=document.getElementById('edit-fname').value.trim();
+  var ln=document.getElementById('edit-lname').value.trim();
+  var em=document.getElementById('edit-email').value.trim();
+  if(fn||ln) document.getElementById('display-name').textContent=(fn+' '+ln).trim();
+  if(em) document.getElementById('display-email').textContent=em;
+  closeModal();
+}
+
+renderStreak();
+renderProdChart();
+renderSkills();
+renderMoods();
+renderPeople();
+renderDonut();
+renderRecent();
+</script>

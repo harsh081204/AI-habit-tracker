@@ -1,0 +1,442 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cream:#fffff4;--yellow:#fffed7;--green:#a8c675;--navy:#212844;--blue:#2081c3;
+  --f-display:'DM Serif Display',serif;--f-body:'DM Sans',sans-serif;--f-mono:'DM Mono',monospace;
+}
+body{font-family:var(--f-body);background:var(--cream);color:var(--navy);}
+
+/* LAYOUT */
+.shell{display:grid;grid-template-rows:auto 1fr;height:100vh;min-height:700px;}
+.topbar{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:52px;flex-shrink:0;}
+.tb-logo{font-family:var(--f-display);font-size:19px;color:var(--cream);letter-spacing:-0.02em;}
+.tb-logo span{color:var(--green);}
+.tb-nav{display:flex;align-items:center;gap:1.5rem;}
+.tb-link{font-size:13px;color:rgba(255,255,244,0.5);text-decoration:none;transition:color 0.15s;background:none;border:none;cursor:pointer;font-family:var(--f-body);}
+.tb-link:hover,.tb-link.active{color:var(--cream);}
+.tb-link.active{color:var(--green);}
+.tb-avatar{width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--navy);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:var(--f-body);cursor:pointer;}
+
+.body{display:grid;grid-template-columns:260px 1fr;overflow:hidden;}
+
+/* SIDEBAR */
+.sidebar{background:white;border-right:1px solid rgba(33,40,68,0.08);display:flex;flex-direction:column;overflow:hidden;}
+.sb-head{padding:1rem 1rem 0.75rem;border-bottom:1px solid rgba(33,40,68,0.07);}
+.sb-new-btn{width:100%;padding:9px;background:var(--navy);color:var(--cream);border:none;border-radius:8px;font-family:var(--f-body);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;margin-bottom:0.75rem;}
+.sb-new-btn:hover{background:#2d3860;}
+.sb-search{width:100%;padding:8px 10px;border:1.5px solid rgba(33,40,68,0.12);border-radius:7px;font-family:var(--f-body);font-size:12px;color:var(--navy);background:var(--cream);outline:none;}
+.sb-search:focus{border-color:var(--blue);}
+.sb-entries{flex:1;overflow-y:auto;padding:0.5rem 0;}
+.entry-item{padding:0.75rem 1rem;cursor:pointer;border-left:3px solid transparent;transition:all 0.15s;}
+.entry-item:hover{background:rgba(33,40,68,0.03);}
+.entry-item.active{background:rgba(32,129,195,0.05);border-left-color:var(--blue);}
+.ei-date{font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.4);margin-bottom:3px;}
+.ei-title{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:3px;line-height:1.3;}
+.ei-preview{font-size:11px;color:rgba(33,40,68,0.5);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ei-chips{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap;}
+.ei-chip{font-size:9px;padding:2px 6px;border-radius:999px;}
+.ei-chip-g{background:rgba(168,198,117,0.18);color:#3a5a10;}
+.ei-chip-b{background:rgba(32,129,195,0.1);color:#145585;}
+.ei-score{font-family:var(--f-display);font-size:13px;color:var(--navy);margin-left:auto;flex-shrink:0;}
+.ei-row{display:flex;align-items:flex-start;gap:6px;}
+
+/* MAIN EDITOR */
+.main{display:flex;flex-direction:column;overflow:hidden;background:var(--cream);}
+
+/* EDITOR STATE */
+.editor-state{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.editor-toolbar{padding:0.75rem 1.5rem;border-bottom:1px solid rgba(33,40,68,0.07);display:flex;align-items:center;justify-content:space-between;background:white;}
+.et-left{display:flex;align-items:center;gap:6px;}
+.et-date{font-family:var(--f-mono);font-size:11px;color:rgba(33,40,68,0.4);}
+.et-status{font-size:10px;font-family:var(--f-mono);padding:3px 8px;border-radius:4px;}
+.et-status-draft{background:rgba(228,160,0,0.12);color:#7a6000;}
+.et-status-saving{background:rgba(32,129,195,0.1);color:#145585;}
+.et-status-saved{background:rgba(168,198,117,0.15);color:#3a5a10;}
+.et-right{display:flex;align-items:center;gap:8px;}
+.btn-format{width:28px;height:28px;border:1px solid rgba(33,40,68,0.12);border-radius:5px;background:white;cursor:pointer;font-family:var(--f-body);font-size:12px;font-weight:500;color:rgba(33,40,68,0.5);display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.btn-format:hover{border-color:rgba(33,40,68,0.3);color:var(--navy);}
+.btn-submit-main{padding:8px 18px;background:var(--navy);color:var(--cream);border:none;border-radius:7px;font-family:var(--f-body);font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s;}
+.btn-submit-main:hover{background:#2d3860;}
+.btn-submit-main:disabled{opacity:0.4;cursor:not-allowed;}
+
+.editor-area{flex:1;overflow-y:auto;padding:2rem 3rem;}
+.editor-placeholder{font-family:var(--f-display);font-size:15px;color:rgba(33,40,68,0.25);margin-bottom:1.5rem;font-style:italic;}
+.editor-content{min-height:300px;outline:none;font-size:15px;line-height:1.8;color:var(--navy);}
+.editor-content:empty:before{content:attr(data-placeholder);color:rgba(33,40,68,0.25);font-style:italic;pointer-events:none;}
+.char-count{font-size:10px;font-family:var(--f-mono);color:rgba(33,40,68,0.25);text-align:right;padding:0.5rem 3rem 1rem;}
+
+/* PROCESSING STATE */
+.processing-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;display:none;}
+.proc-spinner{width:48px;height:48px;border:3px solid rgba(33,40,68,0.08);border-top-color:var(--blue);border-radius:50%;animation:spin 0.9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.proc-title{font-family:var(--f-display);font-size:20px;color:var(--navy);}
+.proc-sub{font-size:13px;color:rgba(33,40,68,0.45);}
+.proc-steps{display:flex;flex-direction:column;gap:6px;margin-top:0.5rem;}
+.proc-step{font-size:12px;font-family:var(--f-mono);color:rgba(33,40,68,0.35);display:flex;align-items:center;gap:8px;}
+.proc-step.done{color:#3a5a10;}
+.proc-step-dot{width:6px;height:6px;border-radius:50%;background:rgba(33,40,68,0.15);flex-shrink:0;}
+.proc-step.done .proc-step-dot{background:var(--green);}
+.proc-step.active .proc-step-dot{background:var(--blue);animation:pulse 1s ease-in-out infinite;}
+.proc-step.active{color:#145585;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+/* PROCESSED / RESULT STATE */
+.result-state{flex:1;overflow-y:auto;display:none;}
+.result-toolbar{padding:0.75rem 1.5rem;border-bottom:1px solid rgba(33,40,68,0.07);display:flex;align-items:center;justify-content:space-between;background:white;}
+.btn-edit-back{padding:7px 14px;background:transparent;color:var(--navy);border:1.5px solid rgba(33,40,68,0.18);border-radius:7px;font-family:var(--f-body);font-size:12px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:5px;}
+.btn-edit-back:hover{border-color:var(--navy);}
+.result-date{font-family:var(--f-mono);font-size:11px;color:rgba(33,40,68,0.4);}
+
+.result-body{padding:2rem 3rem;}
+.result-mood-row{display:flex;align-items:center;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.mood-pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;font-family:var(--f-body);}
+.score-pill{padding:4px 12px;border-radius:999px;font-size:11px;font-family:var(--f-mono);background:var(--yellow);color:#7a6000;border:1px solid rgba(33,40,68,0.1);}
+.streak-pill{padding:4px 12px;border-radius:999px;font-size:11px;font-family:var(--f-mono);background:rgba(33,40,68,0.06);color:var(--navy);}
+
+.result-narrative{font-family:var(--f-display);font-size:22px;line-height:1.45;color:var(--navy);margin-bottom:1.75rem;font-style:italic;}
+
+.result-section{margin-bottom:1.5rem;}
+.rs-label{font-size:10px;font-family:var(--f-mono);letter-spacing:0.1em;text-transform:uppercase;color:rgba(33,40,68,0.35);margin-bottom:0.6rem;}
+.rs-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.rs-chip{font-size:12px;padding:4px 11px;border-radius:999px;font-family:var(--f-body);}
+.rs-chip-green{background:rgba(168,198,117,0.15);color:#3a5a10;}
+.rs-chip-blue{background:rgba(32,129,195,0.1);color:#145585;}
+.rs-chip-navy{background:rgba(33,40,68,0.07);color:var(--navy);}
+
+.entries-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.entry-card{background:white;border:1px solid rgba(33,40,68,0.08);border-radius:10px;padding:0.75rem 1rem;}
+.ec-type{font-size:10px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:0.08em;color:rgba(33,40,68,0.35);margin-bottom:3px;}
+.ec-title{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:2px;}
+.ec-meta{font-size:11px;color:rgba(33,40,68,0.45);}
+.ec-badge{display:inline-block;font-size:9px;padding:2px 7px;border-radius:4px;margin-top:4px;font-family:var(--f-mono);}
+.ec-done{background:rgba(168,198,117,0.15);color:#3a5a10;}
+.ec-pending{background:rgba(228,160,0,0.12);color:#7a6000;}
+
+.result-raw-toggle{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(33,40,68,0.07);}
+.raw-btn{background:none;border:none;font-family:var(--f-mono);font-size:11px;color:rgba(33,40,68,0.35);cursor:pointer;display:flex;align-items:center;gap:5px;padding:0;}
+.raw-btn:hover{color:var(--navy);}
+.raw-text{display:none;margin-top:0.75rem;background:rgba(33,40,68,0.03);border-radius:8px;padding:1rem;font-family:var(--f-mono);font-size:12px;color:rgba(33,40,68,0.6);line-height:1.6;}
+.raw-text.show{display:block;}
+
+/* EMPTY STATE */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:0.75rem;text-align:center;padding:3rem;}
+.empty-icon{width:52px;height:52px;background:var(--yellow);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:0.25rem;}
+.empty-h{font-family:var(--f-display);font-size:20px;color:var(--navy);}
+.empty-sub{font-size:13px;color:rgba(33,40,68,0.45);line-height:1.65;max-width:280px;}
+</style>
+
+<div class="shell">
+
+  <div class="topbar">
+    <span class="tb-logo">day<span>log</span></span>
+    <div class="tb-nav">
+      <button class="tb-link active">Journal</button>
+      <button class="tb-link">Profile</button>
+      <div class="tb-avatar">RK</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <div class="sidebar">
+      <div class="sb-head">
+        <button class="sb-new-btn" onclick="newEntry()">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          New entry
+        </button>
+        <input class="sb-search" placeholder="Search entries..." oninput="filterEntries(this.value)"/>
+      </div>
+      <div class="sb-entries" id="sb-entries"></div>
+    </div>
+
+    <div class="main">
+
+      <div class="editor-state" id="editor-state">
+        <div class="editor-toolbar">
+          <div class="et-left">
+            <span class="et-date" id="et-date"></span>
+            <span class="et-status et-status-draft" id="et-status">draft</span>
+          </div>
+          <div class="et-right">
+            <button class="btn-format" title="Bold" onclick="fmt('bold')"><b>B</b></button>
+            <button class="btn-format" title="Italic" onclick="fmt('italic')"><i>I</i></button>
+            <button class="btn-format" title="Bullet list" onclick="fmt('insertUnorderedList')">&#8226;</button>
+            <button class="btn-submit-main" id="submit-btn" onclick="submitEntry()">Submit</button>
+          </div>
+        </div>
+        <div class="editor-area">
+          <div class="editor-content" id="editor" contenteditable="true"
+            data-placeholder="Write about your day... What did you study? Who did you meet? How do you feel?"
+            oninput="onType()"></div>
+        </div>
+        <div class="char-count" id="char-count">0 words</div>
+      </div>
+
+      <div class="processing-state" id="processing-state">
+        <div class="proc-spinner"></div>
+        <div class="proc-title">Processing your entry</div>
+        <p class="proc-sub">AI is reading your day...</p>
+        <div class="proc-steps" id="proc-steps">
+          <div class="proc-step active" id="ps1"><div class="proc-step-dot"></div>Parsing activities and events</div>
+          <div class="proc-step" id="ps2"><div class="proc-step-dot"></div>Extracting skills and people</div>
+          <div class="proc-step" id="ps3"><div class="proc-step-dot"></div>Scoring productivity</div>
+          <div class="proc-step" id="ps4"><div class="proc-step-dot"></div>Writing your journal narrative</div>
+        </div>
+      </div>
+
+      <div class="result-state" id="result-state">
+        <div class="result-toolbar">
+          <button class="btn-edit-back" onclick="backToEditor()">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M7.5 2L3.5 6l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Edit raw
+          </button>
+          <span class="result-date" id="result-date"></span>
+          <button style="padding:7px 14px;background:var(--green);color:var(--navy);border:none;border-radius:7px;font-family:var(--f-body);font-size:12px;font-weight:500;cursor:pointer;">Save entry</button>
+        </div>
+        <div class="result-body" id="result-body"></div>
+      </div>
+
+      <div class="empty-state" id="empty-state" style="display:none;">
+        <div class="empty-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#212844" stroke-width="1.4"/><path d="M7 8h8M7 11h5" stroke="#212844" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="empty-h">Select an entry</div>
+        <p class="empty-sub">Pick a past entry from the sidebar, or start a new one for today.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+var entries = [
+  {id:1,date:'Apr 3, 2026',title:'Focused and productive',preview:'Studied rate limiter, gym, lunch with Priya at campus canteen...',score:0.8,processed:true,
+    raw:'woke up at 8, did leetcode problem on trees for 2 hours, had lunch with Priya at campus canteen, went to gym (chest day), studied rate limiter concept in the evening, scrolled instagram for too long, slept at 1am',
+    narrative:'You had a highly productive day. Study sessions on rate limiters and trees showed strong technical focus, balanced with a solid gym session. Instagram cost you some late hours — worth watching.',
+    mood:'productive',chips_skills:['rate limiter','binary trees','system design'],chips_people:['Priya'],chips_places:['campus canteen'],
+    activity_entries:[
+      {type:'study',title:'Leetcode — binary trees',meta:'2 hrs · morning',status:'done'},
+      {type:'gym',title:'Chest day',meta:'~1 hr · afternoon',status:'done'},
+      {type:'social',title:'Lunch with Priya',meta:'campus canteen',status:'done'},
+      {type:'study',title:'Rate limiter concepts',meta:'evening',status:'done'},
+      {type:'leisure',title:'Instagram scrolling',meta:'late night',status:'done'},
+    ]
+  },
+  {id:2,date:'Apr 2, 2026',title:'System design mock',preview:'Mock interview with Arjun, went really well. Had chai at Brew House...',score:0.9,processed:true,
+    raw:'Just finished system design mock interview with Arjun, went well. Had chai at Brew House after.',
+    narrative:'A sharp, high-signal day. The system design mock with Arjun went well — strong indicator you\'re interview-ready. Short but very intentional.',
+    mood:'happy',chips_skills:['system design','distributed systems'],chips_people:['Arjun'],chips_places:['Brew House'],
+    activity_entries:[
+      {type:'work',title:'System design mock with Arjun',meta:'interview prep',status:'done'},
+      {type:'social',title:'Chai at Brew House',meta:'post-mock',status:'done'},
+    ]
+  },
+  {id:3,date:'Apr 1, 2026',title:'Chill day',preview:'Movie with friends, might study tomorrow...',score:0.3,processed:true,
+    raw:'pretty chill day. movie with friends, might study tomorrow',
+    narrative:'A restful day — sometimes that\'s exactly what you need. No technical work, just time with friends. The pending study session is a good intention to carry forward.',
+    mood:'neutral',chips_skills:[],chips_people:[],chips_places:[],
+    activity_entries:[
+      {type:'leisure',title:'Movie with friends',meta:'afternoon',status:'done'},
+      {type:'study',title:'Study session',meta:'planned',status:'pending'},
+    ]
+  },
+];
+
+var currentEntry = null;
+var autosaveTimer = null;
+var wordCountTimer = null;
+
+function pad(n){return n<10?'0'+n:n;}
+function today(){var d=new Date();return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
+
+function renderSidebar(filter){
+  var list = document.getElementById('sb-entries');
+  list.innerHTML = '';
+  var f = (filter||'').toLowerCase();
+  entries.forEach(function(e){
+    if(f && e.title.toLowerCase().indexOf(f)<0 && e.preview.toLowerCase().indexOf(f)<0) return;
+    var div = document.createElement('div');
+    div.className = 'entry-item' + (currentEntry&&currentEntry.id===e.id?' active':'');
+    div.onclick = function(){selectEntry(e);}
+    var scoreColor = e.score >= 0.7 ? 'var(--green)' : e.score >= 0.4 ? '#e4a000' : 'rgba(33,40,68,0.3)';
+    div.innerHTML = '<div class="ei-date">'+e.date+'</div>'
+      +'<div class="ei-row"><div class="ei-title" style="flex:1;">'+e.title+'</div><div class="ei-score" style="color:'+scoreColor+';">'+e.score.toFixed(1)+'</div></div>'
+      +'<div class="ei-preview">'+e.preview+'</div>'
+      +'<div class="ei-chips">'
+      +(e.chips_skills.slice(0,2).map(function(s){return '<span class="ei-chip ei-chip-g">'+s+'</span>';}).join(''))
+      +(e.chips_people.slice(0,1).map(function(p){return '<span class="ei-chip ei-chip-b">'+p+'</span>';}).join(''))
+      +'</div>';
+    list.appendChild(div);
+  });
+}
+
+function filterEntries(v){renderSidebar(v);}
+
+function selectEntry(e){
+  currentEntry = e;
+  renderSidebar();
+  if(e.processed){
+    showResult(e);
+  } else {
+    showEditor(e);
+  }
+}
+
+function newEntry(){
+  currentEntry = {id: Date.now(), date:today(), title:'', preview:'', score:null, processed:false, raw:'', narrative:'', mood:'', chips_skills:[], chips_people:[], chips_places:[], activity_entries:[]};
+  renderSidebar();
+  showEditor(currentEntry);
+}
+
+function showEditor(e){
+  document.getElementById('editor-state').style.display='flex';
+  document.getElementById('processing-state').style.display='none';
+  document.getElementById('result-state').style.display='none';
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('et-date').textContent = e.date;
+  var ed = document.getElementById('editor');
+  ed.textContent = e.raw || '';
+  setStatus('draft');
+  updateWordCount();
+}
+
+function showResult(e){
+  document.getElementById('editor-state').style.display='none';
+  document.getElementById('processing-state').style.display='none';
+  document.getElementById('result-state').style.display='flex';
+  document.getElementById('result-state').style.flexDirection='column';
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('result-date').textContent = e.date;
+  renderResult(e);
+}
+
+function renderResult(e){
+  var moodColors = {productive:'rgba(168,198,117,0.18)',happy:'rgba(32,129,195,0.1)',neutral:'rgba(33,40,68,0.06)',tired:'rgba(228,160,0,0.12)',anxious:'rgba(224,64,64,0.1)'};
+  var moodText = {productive:'#3a5a10',happy:'#145585',neutral:'#555',tired:'#7a6000',anxious:'#a32020'};
+  var mc = moodColors[e.mood]||'rgba(33,40,68,0.06)';
+  var mt = moodText[e.mood]||'#555';
+
+  var actHTML = e.activity_entries.map(function(a){
+    var badge = a.status==='done'?'<span class="ec-badge ec-done">done</span>':'<span class="ec-badge ec-pending">pending</span>';
+    return '<div class="entry-card"><div class="ec-type">'+a.type+'</div><div class="ec-title">'+a.title+'</div><div class="ec-meta">'+a.meta+'</div>'+badge+'</div>';
+  }).join('');
+
+  var skillsHTML = e.chips_skills.length ? e.chips_skills.map(function(s){return '<span class="rs-chip rs-chip-green">'+s+'</span>';}).join('') : '<span style="font-size:12px;color:rgba(33,40,68,0.3);">none detected</span>';
+  var peopleHTML = e.chips_people.length ? e.chips_people.map(function(p){return '<span class="rs-chip rs-chip-blue">'+p+'</span>';}).join('') : '<span style="font-size:12px;color:rgba(33,40,68,0.3);">none detected</span>';
+  var placesHTML = e.chips_places.length ? e.chips_places.map(function(p){return '<span class="rs-chip rs-chip-navy">'+p+'</span>';}).join('') : '<span style="font-size:12px;color:rgba(33,40,68,0.3);">none detected</span>';
+
+  document.getElementById('result-body').innerHTML =
+    '<div class="result-mood-row">'
+    +'<span class="mood-pill" style="background:'+mc+';color:'+mt+';">'+e.mood+'</span>'
+    +'<span class="score-pill">productivity '+e.score.toFixed(1)+'</span>'
+    +'<span class="streak-pill">13 day streak</span>'
+    +'</div>'
+    +'<div class="result-narrative">"'+e.narrative+'"</div>'
+    +'<div class="result-section"><div class="rs-label">Activities ('+e.activity_entries.length+')</div><div class="entries-grid">'+actHTML+'</div></div>'
+    +'<div class="result-section"><div class="rs-label">Skills touched</div><div class="rs-chips">'+skillsHTML+'</div></div>'
+    +'<div class="result-section"><div class="rs-label">People met</div><div class="rs-chips">'+peopleHTML+'</div></div>'
+    +'<div class="result-section"><div class="rs-label">Places visited</div><div class="rs-chips">'+placesHTML+'</div></div>'
+    +'<div class="result-raw-toggle">'
+    +'<button class="raw-btn" onclick="toggleRaw(this)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Show raw input</button>'
+    +'<div class="raw-text" id="raw-display">'+e.raw+'</div>'
+    +'</div>';
+}
+
+function toggleRaw(btn){
+  var r = document.getElementById('raw-display');
+  r.classList.toggle('show');
+  btn.querySelector('svg').style.transform = r.classList.contains('show') ? 'rotate(180deg)' : '';
+  btn.childNodes[1].textContent = r.classList.contains('show') ? ' Hide raw input' : ' Show raw input';
+}
+
+function backToEditor(){
+  if(currentEntry) showEditor(currentEntry);
+}
+
+function setStatus(s){
+  var el = document.getElementById('et-status');
+  el.className = 'et-status';
+  if(s==='saving'){el.classList.add('et-status-saving');el.textContent='saving...';}
+  else if(s==='saved'){el.classList.add('et-status-saved');el.textContent='saved';}
+  else{el.classList.add('et-status-draft');el.textContent='draft';}
+}
+
+function onType(){
+  updateWordCount();
+  setStatus('saving');
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(function(){setStatus('saved');},1800);
+}
+
+function updateWordCount(){
+  var txt = document.getElementById('editor').innerText||'';
+  var words = txt.trim().split(/\s+/).filter(function(w){return w.length>0;});
+  document.getElementById('char-count').textContent = words.length + ' word' + (words.length===1?'':'s');
+}
+
+function fmt(cmd){document.execCommand(cmd,false,null);document.getElementById('editor').focus();}
+
+function submitEntry(){
+  var txt = (document.getElementById('editor').innerText||'').trim();
+  if(!txt){return;}
+  document.getElementById('editor-state').style.display='none';
+  document.getElementById('processing-state').style.display='flex';
+  document.getElementById('processing-state').style.flexDirection='column';
+  document.getElementById('processing-state').style.alignItems='center';
+  document.getElementById('processing-state').style.justifyContent='center';
+  document.getElementById('processing-state').style.gap='1rem';
+
+  var steps = ['ps1','ps2','ps3','ps4'];
+  var i = 0;
+  function nextStep(){
+    if(i>0){
+      var prev = document.getElementById(steps[i-1]);
+      prev.classList.remove('active');
+      prev.classList.add('done');
+    }
+    if(i<steps.length){
+      document.getElementById(steps[i]).classList.add('active');
+      i++;
+      setTimeout(nextStep, 700);
+    } else {
+      setTimeout(function(){
+        document.getElementById(steps[steps.length-1]).classList.remove('active');
+        document.getElementById(steps[steps.length-1]).classList.add('done');
+        setTimeout(showMockResult, 500);
+      }, 400);
+    }
+  }
+  nextStep();
+}
+
+function showMockResult(){
+  var mockEntry = {
+    id: Date.now(), date: today(), title:'Processed entry', preview:'Your entry was processed by AI.',
+    score:0.75, processed:true, raw: (document.getElementById('editor').innerText||'').trim(),
+    narrative:'Your AI-processed journal narrative would appear here after the Go backend calls the Python processor and returns the structured result.',
+    mood:'productive', chips_skills:['your skill 1','your skill 2'],chips_people:['people you mentioned'],chips_places:['places you visited'],
+    activity_entries:[
+      {type:'activity',title:'Detected activity',meta:'from your input',status:'done'},
+      {type:'habit',title:'Another activity',meta:'inferred',status:'done'},
+    ]
+  };
+  entries.unshift(mockEntry);
+  currentEntry = mockEntry;
+  renderSidebar();
+  document.getElementById('processing-state').style.display='none';
+  var ps = document.getElementById('processing-state');
+  ps.querySelectorAll('.proc-step').forEach(function(s){s.classList.remove('active','done');});
+  ps.querySelector('#ps1').classList.add('active');
+  showResult(mockEntry);
+}
+
+function init(){
+  document.getElementById('et-date').textContent = today();
+  renderSidebar();
+  selectEntry(entries[0]);
+}
+
+init();
+</script>

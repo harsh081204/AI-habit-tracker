@@ -1,0 +1,367 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cream:#fffff4;--yellow:#fffed7;--green:#a8c675;--navy:#212844;--blue:#2081c3;
+  --f-display:'DM Serif Display',serif;--f-body:'DM Sans',sans-serif;--f-mono:'DM Mono',monospace;
+}
+body{font-family:var(--f-body);background:var(--cream);color:var(--navy);}
+
+.page{max-width:900px;margin:0 auto;padding:0 2rem 4rem;}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0;border-bottom:1px solid rgba(33,40,68,0.08);margin-bottom:0;}
+.logo{font-family:var(--f-display);font-size:22px;color:var(--navy);letter-spacing:-0.02em;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
+.nav-links a{font-size:14px;color:rgba(33,40,68,0.6);text-decoration:none;transition:color 0.15s;}
+.nav-links a:hover{color:var(--navy);}
+.nav-cta{background:var(--navy);color:var(--cream) !important;padding:8px 18px;border-radius:8px;font-size:13px !important;font-weight:500;}
+.nav-cta:hover{background:#2d3860 !important;}
+
+/* HERO */
+.hero{padding:5rem 0 4rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.hero-eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:1.25rem;}
+.hero-h1{font-family:var(--f-display);font-size:48px;line-height:1.05;letter-spacing:-0.02em;color:var(--navy);margin-bottom:1.25rem;}
+.hero-h1 em{color:var(--blue);font-style:italic;}
+.hero-sub{font-size:15px;line-height:1.75;color:rgba(33,40,68,0.65);margin-bottom:2rem;max-width:380px;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-primary{background:var(--navy);color:var(--cream);padding:12px 24px;border-radius:8px;border:none;font-family:var(--f-body);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s;}
+.btn-primary:hover{background:#2d3860;}
+.btn-outline{background:transparent;color:var(--navy);padding:11px 24px;border-radius:8px;border:1.5px solid rgba(33,40,68,0.25);font-family:var(--f-body);font-size:14px;font-weight:400;cursor:pointer;transition:all 0.15s;}
+.btn-outline:hover{border-color:var(--navy);}
+.hero-social{display:flex;align-items:center;gap:8px;margin-top:1.5rem;}
+.hero-avatars{display:flex;}
+.hero-avatars .av{width:28px;height:28px;border-radius:50%;border:2px solid var(--cream);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-left:-8px;font-family:var(--f-body);}
+.hero-avatars .av:first-child{margin-left:0;}
+.hero-social-text{font-size:12px;color:rgba(33,40,68,0.55);}
+.hero-social-text strong{color:var(--navy);font-weight:500;}
+
+/* JOURNAL CARD MOCKUP */
+.journal-card{background:white;border:1px solid rgba(33,40,68,0.1);border-radius:16px;padding:1.25rem;position:relative;}
+.jc-bar{display:flex;align-items:center;gap:6px;margin-bottom:1rem;}
+.jc-dot{width:8px;height:8px;border-radius:50%;}
+.jc-date{font-family:var(--f-mono);font-size:10px;color:rgba(33,40,68,0.4);margin-left:auto;}
+.jc-title{font-family:var(--f-display);font-size:17px;color:var(--navy);margin-bottom:0.5rem;}
+.jc-text{font-size:12px;line-height:1.65;color:rgba(33,40,68,0.7);margin-bottom:1rem;}
+.jc-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem;}
+.jc-chip{font-size:10px;padding:3px 9px;border-radius:999px;font-family:var(--f-body);}
+.jc-chip-green{background:rgba(168,198,117,0.2);color:#3a5a10;}
+.jc-chip-blue{background:rgba(32,129,195,0.1);color:#145585;}
+.jc-chip-yellow{background:rgba(255,254,215,0.9);color:#7a6000;border:1px solid rgba(33,40,68,0.1);}
+.jc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.jc-stat{background:var(--cream);border-radius:8px;padding:8px;text-align:center;}
+.jc-stat-val{font-family:var(--f-display);font-size:18px;color:var(--navy);}
+.jc-stat-lbl{font-size:9px;font-family:var(--f-mono);color:rgba(33,40,68,0.45);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px;}
+.jc-badge{position:absolute;top:-10px;right:16px;background:var(--green);color:var(--navy);font-size:10px;font-weight:600;font-family:var(--f-body);padding:4px 10px;border-radius:999px;}
+
+/* DIVIDER */
+.section-divider{border:none;border-top:1px solid rgba(33,40,68,0.07);margin:0;}
+
+/* HOW IT WORKS */
+.hiw{padding:4rem 0;}
+.section-eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:0.75rem;text-align:center;}
+.section-title{font-family:var(--f-display);font-size:34px;letter-spacing:-0.02em;color:var(--navy);text-align:center;margin-bottom:0.75rem;}
+.section-sub{font-size:14px;color:rgba(33,40,68,0.55);text-align:center;line-height:1.7;max-width:480px;margin:0 auto 3rem;}
+.steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;}
+.step{padding:1.5rem;background:white;border:1px solid rgba(33,40,68,0.08);border-radius:16px;position:relative;}
+.step-num{font-family:var(--f-display);font-size:36px;color:rgba(33,40,68,0.08);line-height:1;margin-bottom:0.75rem;}
+.step-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:0.5rem;}
+.step-text{font-size:13px;color:rgba(33,40,68,0.6);line-height:1.6;}
+.step-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:0.75rem;}
+
+/* FEATURES */
+.features{padding:4rem 0;}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.feat-card{padding:1.5rem;border-radius:16px;border:1px solid rgba(33,40,68,0.08);}
+.feat-card-navy{background:var(--navy);border:none;}
+.feat-card-yellow{background:var(--yellow);}
+.feat-card-white{background:white;}
+.feat-card-green{background:rgba(168,198,117,0.12);}
+.feat-title{font-size:16px;font-weight:500;margin-bottom:0.5rem;}
+.feat-text{font-size:13px;line-height:1.65;}
+.feat-tag{display:inline-block;font-size:10px;font-family:var(--f-mono);padding:3px 8px;border-radius:4px;margin-bottom:0.75rem;letter-spacing:0.05em;}
+
+/* SOCIAL PROOF */
+.social{padding:4rem 0;}
+.testimonials{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.testi{background:white;border:1px solid rgba(33,40,68,0.08);border-radius:16px;padding:1.25rem;}
+.testi-text{font-size:13px;line-height:1.7;color:rgba(33,40,68,0.75);margin-bottom:1rem;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:8px;}
+.testi-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-family:var(--f-body);flex-shrink:0;}
+.testi-name{font-size:12px;font-weight:500;color:var(--navy);}
+.testi-role{font-size:11px;color:rgba(33,40,68,0.45);}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:3rem;}
+.stat-box{text-align:center;padding:1.5rem 1rem;background:white;border:1px solid rgba(33,40,68,0.08);border-radius:16px;}
+.stat-val{font-family:var(--f-display);font-size:32px;color:var(--navy);line-height:1;}
+.stat-lbl{font-size:12px;color:rgba(33,40,68,0.5);margin-top:6px;}
+
+/* PRICING */
+.pricing{padding:4rem 0;}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:560px;margin:0 auto;}
+.price-card{padding:1.75rem;border-radius:16px;border:1px solid rgba(33,40,68,0.1);background:white;}
+.price-card-featured{background:var(--navy);border:none;}
+.price-name{font-size:13px;font-weight:500;margin-bottom:0.5rem;}
+.price-amount{font-family:var(--f-display);font-size:36px;line-height:1;margin-bottom:0.25rem;}
+.price-period{font-size:12px;margin-bottom:1.25rem;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem;}
+.price-features li{font-size:13px;display:flex;align-items:flex-start;gap:7px;line-height:1.5;}
+.pf-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.price-btn{width:100%;padding:11px;border-radius:8px;font-family:var(--f-body);font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all 0.15s;}
+
+/* CTA */
+.cta-section{padding:4rem 0 2rem;}
+.cta-box{background:var(--navy);border-radius:24px;padding:3.5rem 2rem;text-align:center;}
+.cta-h{font-family:var(--f-display);font-size:36px;color:var(--cream);letter-spacing:-0.02em;margin-bottom:0.75rem;}
+.cta-sub{font-size:14px;color:rgba(255,255,244,0.6);margin-bottom:2rem;line-height:1.7;}
+.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn-cta-primary{background:var(--green);color:var(--navy);padding:13px 28px;border-radius:10px;border:none;font-family:var(--f-body);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.15s;}
+.btn-cta-primary:hover{background:#96b463;}
+.btn-cta-ghost{background:transparent;color:rgba(255,255,244,0.7);padding:12px 28px;border-radius:10px;border:1.5px solid rgba(255,255,244,0.2);font-family:var(--f-body);font-size:14px;cursor:pointer;transition:all 0.15s;}
+.btn-cta-ghost:hover{color:var(--cream);border-color:rgba(255,255,244,0.4);}
+.cta-note{font-size:12px;color:rgba(255,255,244,0.35);margin-top:1.25rem;}
+
+/* FOOTER */
+footer{padding:2rem 0;border-top:1px solid rgba(33,40,68,0.08);display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{font-family:var(--f-display);font-size:18px;color:var(--navy);}
+.footer-links{display:flex;gap:1.5rem;list-style:none;}
+.footer-links a{font-size:12px;color:rgba(33,40,68,0.45);text-decoration:none;}
+.footer-links a:hover{color:var(--navy);}
+.footer-copy{font-size:11px;color:rgba(33,40,68,0.35);font-family:var(--f-mono);}
+</style>
+
+<div class="page">
+
+  <nav>
+    <span class="logo">day<span>log</span></span>
+    <ul class="nav-links">
+      <li><a href="#">How it works</a></li>
+      <li><a href="#">Features</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">Log in</a></li>
+      <li><a href="#" class="nav-cta">Get started</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow">Your daily intelligence layer</p>
+      <h1 class="hero-h1">Write your day.<br><em>Understand</em> your life.</h1>
+      <p class="hero-sub">Daylog turns your raw daily notes into structured insight — tracking skills, habits, people, and patterns automatically, so you can focus on what matters.</p>
+      <div class="hero-btns">
+        <button class="btn-primary">Start journaling free</button>
+        <button class="btn-outline">See how it works</button>
+      </div>
+      <div class="hero-social">
+        <div class="hero-avatars">
+          <div class="av" style="background:#a8c675;color:#212844;">RK</div>
+          <div class="av" style="background:#2081c3;color:white;">PS</div>
+          <div class="av" style="background:#212844;color:#fffff4;">AV</div>
+          <div class="av" style="background:#fffed7;color:#212844;border-color:rgba(33,40,68,0.2);">+</div>
+        </div>
+        <p class="hero-social-text">Joined by <strong>2,400+ students</strong> and builders</p>
+      </div>
+    </div>
+
+    <div style="position:relative;">
+      <div class="journal-card">
+        <span class="jc-badge">Processed</span>
+        <div class="jc-bar">
+          <div class="jc-dot" style="background:#a8c675;"></div>
+          <div class="jc-dot" style="background:#fffed7;border:1px solid rgba(33,40,68,0.2);"></div>
+          <div class="jc-dot" style="background:rgba(33,40,68,0.1);"></div>
+          <span class="jc-date">Apr 3, 2026</span>
+        </div>
+        <div class="jc-title">A focused, productive day</div>
+        <p class="jc-text">You tackled system design concepts for 2 hours, hit the gym for chest day, and had a great lunch with Priya. Instagram cost you about an hour — something to watch.</p>
+        <div class="jc-chips">
+          <span class="jc-chip jc-chip-green">rate limiter</span>
+          <span class="jc-chip jc-chip-green">system design</span>
+          <span class="jc-chip jc-chip-blue">Priya</span>
+          <span class="jc-chip jc-chip-blue">campus canteen</span>
+          <span class="jc-chip jc-chip-yellow">productive</span>
+        </div>
+        <div class="jc-stats">
+          <div class="jc-stat">
+            <div class="jc-stat-val">0.8</div>
+            <div class="jc-stat-lbl">score</div>
+          </div>
+          <div class="jc-stat">
+            <div class="jc-stat-val">4</div>
+            <div class="jc-stat-lbl">activities</div>
+          </div>
+          <div class="jc-stat">
+            <div class="jc-stat-val">12</div>
+            <div class="jc-stat-lbl">day streak</div>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute;bottom:-12px;left:16px;right:16px;height:12px;background:rgba(33,40,68,0.04);border-radius:0 0 16px 16px;border:1px solid rgba(33,40,68,0.06);border-top:none;"></div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="hiw">
+    <p class="section-eyebrow">How it works</p>
+    <h2 class="section-title">Three steps. Zero friction.</h2>
+    <p class="section-sub">No templates, no forms. Just write like you think — daylog figures out the rest.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon" style="background:rgba(32,129,195,0.1);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="2" rx="1" fill="#2081c3"/><rect x="2" y="8" width="10" height="2" rx="1" fill="#2081c3" opacity="0.5"/><rect x="2" y="13" width="12" height="2" rx="1" fill="#2081c3" opacity="0.3"/></svg>
+        </div>
+        <div class="step-title">Write freely</div>
+        <p class="step-text">Dump your day in plain language. No structure required — write like you're texting a friend.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon" style="background:rgba(168,198,117,0.2);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#a8c675" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="#a8c675" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="step-title">AI processes it</div>
+        <p class="step-text">Hit submit. Our LLM extracts skills, people, moods, habits and generates your journal narrative.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon" style="background:rgba(255,254,215,0.8);border:1px solid rgba(33,40,68,0.08);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 13l4-4 3 3 5-6" stroke="#e4a000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="step-title">Track your growth</div>
+        <p class="step-text">See patterns over time — your skill trajectory, social graph, productivity trends, and mood history.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="features">
+    <p class="section-eyebrow">Features</p>
+    <h2 class="section-title">Built for people who think in text</h2>
+    <p class="section-sub">Everything you need to turn a habit of writing into a system of self-knowledge.</p>
+    <div class="feat-grid">
+      <div class="feat-card feat-card-navy">
+        <span class="feat-tag" style="background:rgba(168,198,117,0.2);color:#a8c675;">AI-powered</span>
+        <div class="feat-title" style="color:var(--cream);">Entity extraction</div>
+        <p class="feat-text" style="color:rgba(255,255,244,0.6);">Automatically pulls people, places, skills, mood, and activities from your raw text. No tagging required.</p>
+      </div>
+      <div class="feat-card feat-card-white">
+        <span class="feat-tag" style="background:rgba(32,129,195,0.1);color:#145585;">Editor</span>
+        <div class="feat-title" style="color:var(--navy);">Notion-like block editor</div>
+        <p class="feat-text" style="color:rgba(33,40,68,0.6);">A clean, distraction-free writing surface. Autosaves every two seconds so you never lose a thought.</p>
+      </div>
+      <div class="feat-card feat-card-yellow">
+        <span class="feat-tag" style="background:rgba(33,40,68,0.08);color:#7a6000;">Analytics</span>
+        <div class="feat-title" style="color:var(--navy);">Productivity scoring</div>
+        <p class="feat-text" style="color:rgba(33,40,68,0.6);">Every entry gets a 0–1 productivity score. Track your best days and your patterns over weeks.</p>
+      </div>
+      <div class="feat-card feat-card-green">
+        <span class="feat-tag" style="background:rgba(33,40,68,0.07);color:#3a5a10;">Private</span>
+        <div class="feat-title" style="color:var(--navy);">Fully private by default</div>
+        <p class="feat-text" style="color:rgba(33,40,68,0.6);">Your journal is yours alone. Every entry is scoped to your account — no sharing, no leakage.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="social">
+    <p class="section-eyebrow">Social proof</p>
+    <h2 class="section-title">Loved by students and builders</h2>
+    <p class="section-sub">People using daylog to track their learning, habits, and life.</p>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-val">2.4k</div><div class="stat-lbl">Active users</div></div>
+      <div class="stat-box"><div class="stat-val">38k</div><div class="stat-lbl">Entries processed</div></div>
+      <div class="stat-box"><div class="stat-val">0.73</div><div class="stat-lbl">Avg productivity score</div></div>
+      <div class="stat-box"><div class="stat-val">9 days</div><div class="stat-lbl">Avg streak length</div></div>
+    </div>
+    <div class="testimonials">
+      <div class="testi">
+        <p class="testi-text">"I've tried 10 journaling apps. This is the first one that actually shows me what I did — not just what I wrote."</p>
+        <div class="testi-author">
+          <div class="testi-av" style="background:#a8c675;color:#212844;">RK</div>
+          <div><div class="testi-name">Rahul K.</div><div class="testi-role">CS student, IIT Delhi</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <p class="testi-text">"The skill tracking alone is worth it. I can literally see how many hours I've put into system design this month."</p>
+        <div class="testi-author">
+          <div class="testi-av" style="background:#2081c3;color:white;">PS</div>
+          <div><div class="testi-name">Priya S.</div><div class="testi-role">SWE intern, Bangalore</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <p class="testi-text">"Autosave + AI processing = I just write and forget. The structured output appears on its own. Genuinely magical."</p>
+        <div class="testi-author">
+          <div class="testi-av" style="background:#212844;color:#fffff4;">AV</div>
+          <div><div class="testi-name">Arjun V.</div><div class="testi-role">Indie hacker, Pune</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="pricing">
+    <p class="section-eyebrow">Pricing</p>
+    <h2 class="section-title">Simple, honest pricing</h2>
+    <p class="section-sub">Start free. Upgrade when you're ready.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name" style="color:rgba(33,40,68,0.5);">Free</div>
+        <div class="price-amount" style="color:var(--navy);">₹0</div>
+        <div class="price-period" style="color:rgba(33,40,68,0.4);">forever</div>
+        <ul class="price-features">
+          <li style="color:rgba(33,40,68,0.7);"><span class="pf-dot" style="background:var(--green);"></span>Up to 30 entries/month</li>
+          <li style="color:rgba(33,40,68,0.7);"><span class="pf-dot" style="background:var(--green);"></span>AI processing on every entry</li>
+          <li style="color:rgba(33,40,68,0.7);"><span class="pf-dot" style="background:var(--green);"></span>Basic stats &amp; streak tracking</li>
+          <li style="color:rgba(33,40,68,0.35);"><span class="pf-dot" style="background:rgba(33,40,68,0.15);"></span>Advanced analytics</li>
+          <li style="color:rgba(33,40,68,0.35);"><span class="pf-dot" style="background:rgba(33,40,68,0.15);"></span>Export &amp; integrations</li>
+        </ul>
+        <button class="price-btn" style="background:transparent;color:var(--navy);border:1.5px solid rgba(33,40,68,0.2);">Get started free</button>
+      </div>
+      <div class="price-card price-card-featured">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+          <div class="price-name" style="color:rgba(255,255,244,0.6);">Pro</div>
+          <span style="background:var(--green);color:var(--navy);font-size:9px;font-weight:600;font-family:var(--f-body);padding:3px 8px;border-radius:999px;">Popular</span>
+        </div>
+        <div class="price-amount" style="color:var(--cream);">₹199</div>
+        <div class="price-period" style="color:rgba(255,255,244,0.4);">per month</div>
+        <ul class="price-features">
+          <li style="color:rgba(255,255,244,0.75);"><span class="pf-dot" style="background:var(--green);"></span>Unlimited entries</li>
+          <li style="color:rgba(255,255,244,0.75);"><span class="pf-dot" style="background:var(--green);"></span>Full AI processing &amp; insights</li>
+          <li style="color:rgba(255,255,244,0.75);"><span class="pf-dot" style="background:var(--green);"></span>Advanced analytics dashboard</li>
+          <li style="color:rgba(255,255,244,0.75);"><span class="pf-dot" style="background:var(--green);"></span>Skill &amp; people graph over time</li>
+          <li style="color:rgba(255,255,244,0.75);"><span class="pf-dot" style="background:var(--green);"></span>CSV export</li>
+        </ul>
+        <button class="price-btn" style="background:var(--green);color:var(--navy);">Start Pro free for 7 days</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2 class="cta-h">Start writing. Start knowing.</h2>
+      <p class="cta-sub">It takes 60 seconds to set up. No credit card needed.<br>Just you, a blank editor, and your first entry.</p>
+      <div class="cta-btns">
+        <button class="btn-cta-primary">Create your free account</button>
+        <button class="btn-cta-ghost">See a sample entry</button>
+      </div>
+      <p class="cta-note">Free forever plan available · No credit card required</p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">daylog</span>
+    <ul class="footer-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 daylog</span>
+  </footer>
+
+</div>
