@@ -1,0 +1,801 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --c-cream: #fffff4;
+    --c-yellow: #fffed7;
+    --c-green: #a8c675;
+    --c-navy: #212844;
+    --c-blue: #2081c3;
+    --font-display: 'DM Serif Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 999px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--c-cream);
+    color: var(--c-navy);
+    padding: 2rem;
+    line-height: 1.6;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-blue);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(33,40,68,0.1);
+  }
+
+  .section { margin-bottom: 2.5rem; }
+
+  /* COLORS */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid rgba(33,40,68,0.08);
+  }
+  .swatch-color {
+    height: 64px;
+    display: flex;
+    align-items: flex-end;
+    padding: 8px;
+  }
+  .swatch-info {
+    padding: 8px 10px;
+    background: white;
+  }
+  .swatch-name {
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--c-navy);
+  }
+  .swatch-hex {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: #888;
+    margin-top: 2px;
+  }
+  .swatch-role {
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(33,40,68,0.06);
+  }
+  .type-meta {
+    width: 160px;
+    flex-shrink: 0;
+  }
+  .type-meta-name {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--c-blue);
+    font-weight: 500;
+  }
+  .type-meta-spec {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: #aaa;
+    margin-top: 3px;
+    line-height: 1.6;
+  }
+
+  /* SPACING */
+  .spacing-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .spacing-bar-wrap {
+    flex: 1;
+    height: 20px;
+    display: flex;
+    align-items: center;
+  }
+  .spacing-bar {
+    height: 8px;
+    background: var(--c-green);
+    border-radius: 2px;
+  }
+  .spacing-label {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--c-navy);
+    width: 60px;
+  }
+  .spacing-px {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: #aaa;
+    width: 50px;
+  }
+
+  /* RADIUS */
+  .radius-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .radius-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .radius-box {
+    width: 56px;
+    height: 56px;
+    background: var(--c-yellow);
+    border: 1.5px solid var(--c-green);
+  }
+  .radius-name {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--c-navy);
+    text-align: center;
+  }
+  .radius-val {
+    font-size: 9px;
+    font-family: var(--font-mono);
+    color: #aaa;
+    text-align: center;
+  }
+
+  /* BUTTONS */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s ease;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary {
+    background: var(--c-navy);
+    color: var(--c-cream);
+    padding: 10px 22px;
+    border-radius: var(--radius-md);
+  }
+  .btn-primary:hover { background: #2d3860; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--c-navy);
+    padding: 9px 22px;
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--c-navy);
+  }
+  .btn-secondary:hover { background: rgba(33,40,68,0.05); }
+
+  .btn-accent {
+    background: var(--c-blue);
+    color: white;
+    padding: 10px 22px;
+    border-radius: var(--radius-md);
+  }
+  .btn-accent:hover { background: #1a6faa; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--c-blue);
+    padding: 9px 22px;
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--c-blue);
+  }
+  .btn-ghost:hover { background: rgba(32,129,195,0.06); }
+
+  .btn-green {
+    background: var(--c-green);
+    color: var(--c-navy);
+    padding: 10px 22px;
+    border-radius: var(--radius-md);
+  }
+  .btn-green:hover { background: #96b463; }
+
+  .btn-sm {
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+  }
+  .btn-lg {
+    font-size: 16px;
+    padding: 13px 28px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* INPUTS */
+  .input-col { display: flex; flex-direction: column; gap: 10px; }
+  .input-wrap { display: flex; flex-direction: column; gap: 4px; }
+  .input-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--c-navy);
+    font-family: var(--font-body);
+  }
+  .input {
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 10px 14px;
+    border: 1.5px solid rgba(33,40,68,0.2);
+    border-radius: var(--radius-md);
+    background: white;
+    color: var(--c-navy);
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+  .input:focus { border-color: var(--c-blue); }
+  .input.error { border-color: #e04040; }
+  .input-error-msg { font-size: 11px; color: #e04040; }
+  .input-hint { font-size: 11px; color: #aaa; }
+  .textarea {
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 10px 14px;
+    border: 1.5px solid rgba(33,40,68,0.2);
+    border-radius: var(--radius-md);
+    background: white;
+    color: var(--c-navy);
+    resize: vertical;
+    min-height: 80px;
+    width: 100%;
+    outline: none;
+  }
+  .textarea:focus { border-color: var(--c-blue); }
+
+  /* BADGES */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.02em;
+  }
+  .badge-navy { background: var(--c-navy); color: var(--c-cream); }
+  .badge-blue { background: var(--c-blue); color: white; }
+  .badge-green { background: var(--c-green); color: var(--c-navy); }
+  .badge-yellow { background: var(--c-yellow); color: var(--c-navy); border: 1px solid rgba(33,40,68,0.15); }
+  .badge-outline { background: transparent; color: var(--c-navy); border: 1px solid rgba(33,40,68,0.3); }
+  .badge-outline-blue { background: transparent; color: var(--c-blue); border: 1px solid var(--c-blue); }
+
+  /* CARDS */
+  .cards-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  .card {
+    background: white;
+    border: 1px solid rgba(33,40,68,0.1);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+  }
+  .card-navy {
+    background: var(--c-navy);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    color: var(--c-cream);
+  }
+  .card-yellow {
+    background: var(--c-yellow);
+    border: 1px solid rgba(33,40,68,0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    color: var(--c-navy);
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-family: var(--font-body);
+  }
+  .card-value {
+    font-size: 26px;
+    font-weight: 600;
+    font-family: var(--font-display);
+    line-height: 1.1;
+  }
+  .card-sub {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+
+  /* AVATAR */
+  .avatar-row { display: flex; gap: 12px; align-items: center; }
+  .avatar {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-family: var(--font-body);
+    flex-shrink: 0;
+  }
+  .avatar-sm { width: 28px; height: 28px; font-size: 10px; }
+  .avatar-md { width: 40px; height: 40px; font-size: 14px; }
+  .avatar-lg { width: 56px; height: 56px; font-size: 18px; }
+  .avatar-navy { background: var(--c-navy); color: var(--c-cream); }
+  .avatar-green { background: var(--c-green); color: var(--c-navy); }
+  .avatar-blue { background: var(--c-blue); color: white; }
+
+  /* CHIPS / TAGS */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-family: var(--font-body);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(33,40,68,0.15);
+    background: var(--c-cream);
+    color: var(--c-navy);
+  }
+  .chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(33,40,68,0.1);
+    margin: 2rem 0;
+  }
+
+  /* HEADER SAMPLE */
+  .header-sample {
+    background: var(--c-navy);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .header-logo {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--c-cream);
+    letter-spacing: -0.02em;
+  }
+  .header-nav {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .header-nav a {
+    font-size: 13px;
+    color: rgba(255,255,244,0.65);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: 400;
+    transition: color 0.15s;
+  }
+  .header-nav a:hover { color: var(--c-cream); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* PROGRESS */
+  .progress-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .progress-item-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: var(--c-navy);
+    margin-bottom: 4px;
+  }
+  .progress-track {
+    height: 6px;
+    background: rgba(33,40,68,0.1);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    transition: width 0.6s ease;
+  }
+
+  /* ALERT */
+  .alert {
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-family: var(--font-body);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .alert-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .alert-info { background: rgba(32,129,195,0.08); color: #145585; border-left: 3px solid var(--c-blue); }
+  .alert-success { background: rgba(168,198,117,0.2); color: #3a5a10; border-left: 3px solid var(--c-green); }
+  .alert-warn { background: rgba(255,254,215,0.8); color: #7a6000; border-left: 3px solid #e4c000; border: 1px solid rgba(33,40,68,0.1); border-left: 3px solid #e4c000; }
+
+  /* MOOD CHIP */
+  .mood-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mood-chip {
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1.5px solid transparent;
+  }
+  .mood-chip.active {
+    border-color: var(--c-navy);
+  }
+</style>
+
+<div style="max-width: 760px;">
+
+  <div style="margin-bottom: 2.5rem;">
+    <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-blue); margin-bottom: 0.5rem;">Design System</p>
+    <h1 style="font-family: var(--font-display); font-size: 36px; color: var(--c-navy); letter-spacing: -0.02em; line-height: 1.1;">Daylog UI Kit</h1>
+    <p style="font-family: var(--font-body); font-size: 14px; color: #888; margin-top: 0.5rem;">Tokens, typography, and components for the journaling SaaS</p>
+  </div>
+
+  <div class="section">
+    <p class="section-label">01 — Color Palette</p>
+    <div class="palette-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#fffff4;">
+          <span style="font-size:9px;font-family:var(--font-mono);color:rgba(33,40,68,0.4);">Aa</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Cream</div>
+          <div class="swatch-hex">#fffff4</div>
+          <div class="swatch-role">Page background</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#fffed7;">
+          <span style="font-size:9px;font-family:var(--font-mono);color:rgba(33,40,68,0.4);">Aa</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Yellow</div>
+          <div class="swatch-hex">#fffed7</div>
+          <div class="swatch-role">Surface / highlight</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#a8c675;">
+          <span style="font-size:9px;font-family:var(--font-mono);color:rgba(33,40,68,0.5);">Aa</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Sage Green</div>
+          <div class="swatch-hex">#a8c675</div>
+          <div class="swatch-role">Success / CTA accent</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#212844;">
+          <span style="font-size:9px;font-family:var(--font-mono);color:rgba(255,255,244,0.5);">Aa</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Navy</div>
+          <div class="swatch-hex">#212844</div>
+          <div class="swatch-role">Primary text / nav</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2081c3;">
+          <span style="font-size:9px;font-family:var(--font-mono);color:rgba(255,255,255,0.6);">Aa</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Blue</div>
+          <div class="swatch-hex">#2081c3</div>
+          <div class="swatch-role">Links / interactive</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+      <span style="font-size: 11px; font-family: var(--font-mono); color: #aaa;">Semantic extensions →</span>
+      <span class="badge badge-outline" style="font-size: 10px;">white #ffffff (cards)</span>
+      <span class="badge badge-outline" style="font-size: 10px;">rgba(33,40,68,0.06) (hover states)</span>
+      <span class="badge badge-outline" style="font-size: 10px;">rgba(33,40,68,0.1) (borders)</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">02 — Typography</p>
+    <div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-name">Display</div>
+          <div class="type-meta-spec">DM Serif Display<br>48px / weight 400<br>letter-spacing -0.02em</div>
+        </div>
+        <div style="font-family: var(--font-display); font-size: 42px; color: var(--c-navy); letter-spacing: -0.02em; line-height: 1.05;">Today's Journal</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-name">Heading 1</div>
+          <div class="type-meta-spec">DM Serif Display<br>28px / weight 400</div>
+        </div>
+        <div style="font-family: var(--font-display); font-size: 28px; color: var(--c-navy);">A productive day overall</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-name">Heading 2</div>
+          <div class="type-meta-spec">DM Sans<br>20px / weight 500</div>
+        </div>
+        <div style="font-family: var(--font-body); font-size: 20px; font-weight: 500; color: var(--c-navy);">Skills Touched Today</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-name">Body</div>
+          <div class="type-meta-spec">DM Sans<br>15px / weight 400<br>line-height 1.7</div>
+        </div>
+        <div style="font-family: var(--font-body); font-size: 15px; color: var(--c-navy); line-height: 1.7; max-width: 380px;">You had a highly productive day. You completed activities in study, coding, and gym. Skills touched: rate limiter, system design.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-name">Caption</div>
+          <div class="type-meta-spec">DM Sans<br>12px / weight 400<br>color: muted</div>
+        </div>
+        <div style="font-family: var(--font-body); font-size: 12px; color: #888;">April 3, 2026 · 3 minutes read · productivity 0.8</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta-name">Mono / Code</div>
+          <div class="type-meta-spec">DM Mono<br>13px / weight 400</div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 13px; color: var(--c-navy); background: var(--c-yellow); padding: 4px 8px; border-radius: 4px;">user_id: 64f2a81c...</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">03 — Spacing Scale</p>
+    <div class="spacing-grid">
+      <div class="spacing-row"><span class="spacing-label">--space-1</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px;"></div></div><span class="spacing-px">4px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-2</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px;"></div></div><span class="spacing-px">8px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-3</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:12px;"></div></div><span class="spacing-px">12px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-4</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:16px;"></div></div><span class="spacing-px">16px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-5</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:20px;"></div></div><span class="spacing-px">20px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-6</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px;"></div></div><span class="spacing-px">24px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-8</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px;"></div></div><span class="spacing-px">32px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-10</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:40px;"></div></div><span class="spacing-px">40px</span></div>
+      <div class="spacing-row"><span class="spacing-label">--space-16</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:64px;"></div></div><span class="spacing-px">64px</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">04 — Border Radius</p>
+    <div class="radius-grid">
+      <div class="radius-item"><div class="radius-box" style="border-radius: 4px;"></div><div class="radius-name">sm</div><div class="radius-val">4px · tags</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius: 8px;"></div><div class="radius-name">md</div><div class="radius-val">8px · buttons</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius: 16px;"></div><div class="radius-name">lg</div><div class="radius-val">16px · cards</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius: 24px;"></div><div class="radius-name">xl</div><div class="radius-val">24px · modals</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius: 999px;"></div><div class="radius-name">pill</div><div class="radius-val">999px · badges</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">05 — Buttons</p>
+    <div style="margin-bottom: 12px;">
+      <p style="font-size: 11px; font-family: var(--font-mono); color: #aaa; margin-bottom: 8px;">Variants</p>
+      <div class="btn-row">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-accent">Accent Blue</button>
+        <button class="btn btn-ghost">Ghost</button>
+        <button class="btn btn-green">Success</button>
+      </div>
+    </div>
+    <div>
+      <p style="font-size: 11px; font-family: var(--font-mono); color: #aaa; margin-bottom: 8px;">Sizes</p>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-sm">Small</button>
+        <button class="btn btn-primary">Default</button>
+        <button class="btn btn-primary btn-lg">Large</button>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">06 — Form Inputs</p>
+    <div class="two-col">
+      <div class="input-col">
+        <div class="input-wrap">
+          <label class="input-label">Default</label>
+          <input class="input" placeholder="Write about your day..." />
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">With hint</label>
+          <input class="input" value="Rahul" />
+          <span class="input-hint">This is how others will see you</span>
+        </div>
+        <div class="input-wrap">
+          <label class="input-label">Error state</label>
+          <input class="input error" value="notanemail" />
+          <span class="input-error-msg">Enter a valid email address</span>
+        </div>
+      </div>
+      <div class="input-col">
+        <div class="input-wrap">
+          <label class="input-label">Textarea</label>
+          <textarea class="textarea" placeholder="Today I studied rate limiter concepts for 2 hours, went to gym, had lunch with Priya at the campus canteen..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">07 — Badges & Chips</p>
+    <div style="margin-bottom: 12px;">
+      <p style="font-size: 11px; font-family: var(--font-mono); color: #aaa; margin-bottom: 8px;">Badges</p>
+      <div class="badge-row">
+        <span class="badge badge-navy">Navy</span>
+        <span class="badge badge-blue">Blue</span>
+        <span class="badge badge-green">Success</span>
+        <span class="badge badge-yellow">Highlight</span>
+        <span class="badge badge-outline">Outline</span>
+        <span class="badge badge-outline-blue">Info</span>
+      </div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <p style="font-size: 11px; font-family: var(--font-mono); color: #aaa; margin-bottom: 8px;">Status chips</p>
+      <div class="mood-row">
+        <span class="chip"><span class="chip-dot" style="background:#a8c675;"></span>productive</span>
+        <span class="chip"><span class="chip-dot" style="background:#2081c3;"></span>focused</span>
+        <span class="chip"><span class="chip-dot" style="background:#e4a000;"></span>tired</span>
+        <span class="chip"><span class="chip-dot" style="background:#e04040;"></span>anxious</span>
+        <span class="chip"><span class="chip-dot" style="background:#888;"></span>neutral</span>
+      </div>
+    </div>
+    <div>
+      <p style="font-size: 11px; font-family: var(--font-mono); color: #aaa; margin-bottom: 8px;">Mood selector (interactive)</p>
+      <div class="mood-row" id="moodRow">
+        <span class="mood-chip" style="background:rgba(168,198,117,0.15);color:#3a5a10;" onclick="selectMood(this)">productive</span>
+        <span class="mood-chip" style="background:rgba(32,129,195,0.1);color:#145585;" onclick="selectMood(this)">happy</span>
+        <span class="mood-chip" style="background:rgba(255,254,215,0.8);color:#7a6000;border:1px solid rgba(33,40,68,0.1);" onclick="selectMood(this)">neutral</span>
+        <span class="mood-chip" style="background:rgba(228,160,0,0.12);color:#7a6000;" onclick="selectMood(this)">tired</span>
+        <span class="mood-chip" style="background:rgba(224,64,64,0.1);color:#a32020;" onclick="selectMood(this)">anxious</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">08 — Stat Cards</p>
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-title" style="color:#888;">Total Entries</div>
+        <div class="card-value" style="color:var(--c-navy);">42</div>
+        <div class="card-sub" style="color:#aaa;">since Jan 2026</div>
+      </div>
+      <div class="card-navy">
+        <div class="card-title" style="color:rgba(255,255,244,0.5);">Current Streak</div>
+        <div class="card-value" style="color:var(--c-green);">12 days</div>
+        <div class="card-sub" style="color:rgba(255,255,244,0.4);">personal best: 19</div>
+      </div>
+      <div class="card-yellow">
+        <div class="card-title" style="color:#888;">Avg Productivity</div>
+        <div class="card-value" style="color:var(--c-navy);">0.74</div>
+        <div class="card-sub" style="color:#aaa;">this month</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">09 — Avatars</p>
+    <div class="avatar-row">
+      <div class="avatar avatar-sm avatar-navy">R</div>
+      <div class="avatar avatar-md avatar-navy">RK</div>
+      <div class="avatar avatar-lg avatar-navy">RK</div>
+      <div class="avatar avatar-md avatar-green">AK</div>
+      <div class="avatar avatar-md avatar-blue">PK</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">10 — Progress Bars</p>
+    <div class="progress-wrap">
+      <div>
+        <div class="progress-item-label"><span>Productivity score</span><span>80%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:80%;background:var(--c-green);"></div></div>
+      </div>
+      <div>
+        <div class="progress-item-label"><span>Rate Limiter (skill)</span><span>65%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:65%;background:var(--c-blue);"></div></div>
+      </div>
+      <div>
+        <div class="progress-item-label"><span>System Design</span><span>40%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:40%;background:var(--c-navy);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">11 — Alerts</p>
+    <div class="alert alert-info"><span class="alert-icon">ℹ</span><span>Your journal is being processed. This usually takes a few seconds.</span></div>
+    <div class="alert alert-success"><span class="alert-icon">✓</span><span>Journal saved successfully. 3 skills and 2 people detected.</span></div>
+    <div class="alert alert-warn"><span class="alert-icon">!</span><span>Draft autosaved. Hit Submit when you're ready to process your entry.</span></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">12 — Nav Sample</p>
+    <div class="header-sample">
+      <span class="header-logo">daylog</span>
+      <ul class="header-nav">
+        <li><a href="#">Journal</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#" style="color:var(--c-green);">New Entry</a></li>
+      </ul>
+      <div class="avatar avatar-sm avatar-green" style="width:32px;height:32px;font-size:12px;">RK</div>
+    </div>
+    <p style="font-size: 11px; font-family: var(--font-mono); color: #aaa;">Navy navbar · cream logo · sage green active link · avatar top-right</p>
+  </div>
+
+</div>
+
+<script>
+function selectMood(el) {
+  document.querySelectorAll('.mood-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
