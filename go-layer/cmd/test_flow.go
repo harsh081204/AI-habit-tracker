@@ -14,9 +14,6 @@ import (
 )
 
 func main() {
-	// 1. Setup DB
-	uri := "mongodb+srv://2k23cs2313856_db_user:eOD088rMWMaLGen9@ai-habittracker-cluster.41xu1rq.mongodb.net/ai_habit_tracker?retryWrites=true&w=majority&appName=AIHabitTracker&tls=true"
-	clientOpts := options.Client().ApplyURI(uri)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
