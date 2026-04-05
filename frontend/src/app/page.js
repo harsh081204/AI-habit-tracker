@@ -1,19 +1,20 @@
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className={styles.page}>
       {/* NAV */}
       <nav className={styles.nav}>
-        <a href="/" className={styles.logo}>
+        <Link href="/" className={styles.logo}>
           day<span>log</span>
-        </a>
+        </Link>
         <ul className={styles.navLinks}>
-          <li><a href="#">How it works</a></li>
-          <li><a href="#">Features</a></li>
-          <li><a href="#">Pricing</a></li>
-          <li><a href="#">Log in</a></li>
-          <li><a href="#" className={styles.navCta}>Get started</a></li>
+          <li><Link href="#how-it-works">How it works</Link></li>
+          <li><Link href="#features">Features</Link></li>
+          <li><Link href="#pricing">Pricing</Link></li>
+          <li><Link href="/login">Log in</Link></li>
+          <li><Link href="/signup" className={styles.navCta}>Get started</Link></li>
         </ul>
       </nav>
 
@@ -28,8 +29,8 @@ export default function Home() {
             Daylog turns your raw daily notes into structured insight — tracking skills, habits, people, and patterns automatically, so you can focus on what matters.
           </p>
           <div className={styles.heroBtns}>
-            <button className="btn btn-primary">Start journaling free</button>
-            <button className="btn btn-secondary">See how it works</button>
+            <Link href="/signup" className="btn btn-primary">Start journaling free</Link>
+            <Link href="#how-it-works" className="btn btn-secondary">See how it works</Link>
           </div>
           <div className={styles.heroSocial}>
             <div className={styles.heroAvatars}>
@@ -83,7 +84,7 @@ export default function Home() {
       <hr className={styles.sectionDivider} />
 
       {/* HOW IT WORKS */}
-      <section style={{ padding: '4rem 0' }}>
+      <section id="how-it-works" style={{ padding: '4rem 0' }}>
         <p className="section-label" style={{ textAlign: 'center', border: 'none', marginBottom: '0.75rem' }}>How it works</p>
         <h2 className="font-display" style={{ fontSize: '34px', textAlign: 'center', marginBottom: '0.75rem', letterSpacing: '-0.02em', color: 'var(--c-navy)' }}>
           Three steps. Zero friction.
@@ -109,7 +110,7 @@ export default function Home() {
       <hr className={styles.sectionDivider} />
 
       {/* FEATURES */}
-      <section className={styles.features}>
+      <section id="features" className={styles.features}>
         <p className="section-label" style={{ textAlign: 'center', border: 'none', marginBottom: '0.75rem' }}>Features</p>
         <h2 className="font-display" style={{ fontSize: '34px', textAlign: 'center', marginBottom: '0.75rem', letterSpacing: '-0.02em', color: 'var(--c-navy)' }}>
           Built for people who think in text
@@ -193,7 +194,7 @@ export default function Home() {
       <hr className={styles.sectionDivider} />
 
       {/* PRICING */}
-      <section className={styles.pricing}>
+      <section id="pricing" className={styles.pricing}>
         <p className="section-label" style={{ textAlign: 'center', border: 'none', marginBottom: '0.75rem' }}>Pricing</p>
         <h2 className="font-display" style={{ fontSize: '34px', textAlign: 'center', marginBottom: '0.75rem', letterSpacing: '-0.02em', color: 'var(--c-navy)' }}>
           Simple, honest pricing
@@ -213,7 +214,7 @@ export default function Home() {
               <li style={{ color: 'rgba(33,40,68,0.35)' }}><span className={styles.pfDot} style={{ background: 'rgba(33,40,68,0.15)' }}></span>Advanced analytics</li>
               <li style={{ color: 'rgba(33,40,68,0.35)' }}><span className={styles.pfDot} style={{ background: 'rgba(33,40,68,0.15)' }}></span>Export & integrations</li>
             </ul>
-            <button className={styles.priceBtn} style={{ background: 'transparent', color: 'var(--c-navy)', border: '1.5px solid rgba(33,40,68,0.2)' }}>Get started free</button>
+            <Link href="/signup" className={styles.priceBtn} style={{ textAlign: 'center', textDecoration: 'none', background: 'transparent', color: 'var(--c-navy)', border: '1.5px solid rgba(33,40,68,0.2)' }}>Get started free</Link>
           </div>
           <div className={`${styles.priceCard} ${styles.priceCardFeatured}`}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
@@ -229,7 +230,7 @@ export default function Home() {
               <li style={{ color: 'rgba(255,255,244,0.75)' }}><span className={styles.pfDot} style={{ background: 'var(--c-green)' }}></span>Skill & people graph over time</li>
               <li style={{ color: 'rgba(255,255,244,0.75)' }}><span className={styles.pfDot} style={{ background: 'var(--c-green)' }}></span>CSV export</li>
             </ul>
-            <button className={styles.priceBtn} style={{ background: 'var(--c-green)', color: 'var(--c-navy)' }}>Start Pro free for 7 days</button>
+            <Link href="/signup" className={styles.priceBtn} style={{ textAlign: 'center', textDecoration: 'none', background: 'var(--c-green)', color: 'var(--c-navy)' }}>Start Pro free</Link>
           </div>
         </div>
       </section>
@@ -240,8 +241,8 @@ export default function Home() {
           <h2 className={styles.ctaH}>Start writing. Start knowing.</h2>
           <p className={styles.ctaSub}>It takes 60 seconds to set up. No credit card needed.<br />Just you, a blank editor, and your first entry.</p>
           <div className={styles.ctaBtns}>
-            <button className={styles.btnCtaPrimary}>Create your free account</button>
-            <button className={styles.btnCtaGhost}>See a sample entry</button>
+            <Link href="/signup" className={styles.btnCtaPrimary} style={{ textDecoration: 'none' }}>Create your free account</Link>
+            <Link href="/login" className={styles.btnCtaGhost} style={{ textDecoration: 'none' }}>See a sample entry</Link>
           </div>
           <p className={styles.ctaNote}>Free forever plan available · No credit card required</p>
         </div>
@@ -251,10 +252,10 @@ export default function Home() {
       <footer className={styles.footer}>
         <span className={styles.footerLogo}>daylog</span>
         <ul className={styles.footerLinks}>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><Link href="#">About</Link></li>
+          <li><Link href="#">Privacy</Link></li>
+          <li><Link href="#">Terms</Link></li>
+          <li><Link href="#">Contact</Link></li>
         </ul>
         <span className={styles.footerCopy}>© 2026 daylog</span>
       </footer>

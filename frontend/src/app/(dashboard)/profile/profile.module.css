@@ -1,0 +1,391 @@
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  width: 100%;
+}
+
+/* PROFILE HEADER */
+.profileHeader {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  background: white;
+  border: 1px solid rgba(33, 40, 68, 0.08);
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatarWrap {
+  position: relative;
+}
+
+.avatarLg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--c-navy);
+  color: var(--c-cream);
+  font-family: var(--font-display);
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.02em;
+}
+
+.avatarBadge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--c-green);
+  border-radius: 50%;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.profileName {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--c-navy);
+  letter-spacing: -0.02em;
+  margin-bottom: 3px;
+}
+
+.profileEmail {
+  font-size: 13px;
+  color: rgba(33, 40, 68, 0.45);
+  margin-bottom: 8px;
+}
+
+.profileTags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ptag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+}
+
+.ptagGreen {
+  background: rgba(168, 198, 117, 0.15);
+  color: #3a5a10;
+}
+
+.ptagBlue {
+  background: rgba(32, 129, 195, 0.1);
+  color: #145585;
+}
+
+.ptagNavy {
+  background: rgba(33, 40, 68, 0.07);
+  color: var(--c-navy);
+}
+
+.profileActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.memberSince {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: rgba(33, 40, 68, 0.3);
+}
+
+/* STAT CARDS */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.statCard {
+  background: white;
+  border: 1px solid rgba(33, 40, 68, 0.08);
+  border-radius: 14px;
+  padding: 1.1rem 1rem;
+}
+
+.statCardNavy {
+  background: var(--c-navy);
+  border: none;
+}
+
+.statCardYellow {
+  background: var(--c-yellow);
+  border: 1px solid rgba(33, 40, 68, 0.07);
+}
+
+.statVal {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.statLbl {
+  font-size: 11px;
+  color: rgba(33, 40, 68, 0.45);
+}
+
+.statSub {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  margin-top: 4px;
+}
+
+/* SECTION LABEL */
+.secLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(33, 40, 68, 0.35);
+  margin-bottom: 0.75rem;
+}
+
+/* GRID LAYOUTS */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 1.0rem;
+}
+
+.card {
+  background: white;
+  border: 1px solid rgba(33, 40, 68, 0.08);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+/* STREAK CALENDAR */
+.streakGrid {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 3px;
+  margin-top: 0.75rem;
+}
+
+.streakCell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+}
+
+/* PRODUCTIVITY CHART */
+.prodChart {
+  margin-top: 0.75rem;
+  position: relative;
+  height: 80px;
+}
+
+.prodBars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 72px;
+}
+
+.prodBarWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.prodBar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s ease;
+  min-height: 3px;
+}
+
+.prodBarLbl {
+  font-size: 8px;
+  font-family: var(--font-mono);
+  color: rgba(33, 40, 68, 0.3);
+}
+
+.prodAvgLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed rgba(33, 40, 68, 0.2);
+  pointer-events: none;
+}
+
+/* SKILLS */
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 0.75rem;
+}
+
+.skillRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skillName {
+  font-size: 12px;
+  color: var(--c-navy);
+  width: 110px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skillTrack {
+  flex: 1;
+  height: 6px;
+  background: rgba(33, 40, 68, 0.07);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.skillFill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.skillCount {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: rgba(33, 40, 68, 0.35);
+  width: 24px;
+  text-align: right;
+}
+
+/* MOOD DISTRIBUTION */
+.moodBars {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 0.75rem;
+}
+
+.moodRowItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.moodName {
+  font-size: 12px;
+  color: var(--c-navy);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.moodTrack {
+  flex: 1;
+  height: 8px;
+  background: rgba(33, 40, 68, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.moodFill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.moodPct {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: rgba(33, 40, 68, 0.4);
+  width: 28px;
+  text-align: right;
+}
+
+/* PEOPLE */
+.peopleGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.75rem;
+}
+
+.personChip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px 6px 6px;
+  background: rgba(33, 40, 68, 0.04);
+  border-radius: 999px;
+  border: 1px solid rgba(33, 40, 68, 0.07);
+}
+
+.personAv {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  flex-shrink: 0;
+}
+
+.personName {
+  font-size: 12px;
+  color: var(--c-navy);
+}
+
+/* RECENT ENTRIES */
+.recentList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 0.75rem;
+}
+
+.recentItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(33, 40, 68, 0.02);
+  border: 1px solid rgba(33, 40, 68, 0.06);
+  cursor: pointer;
+}
+
+.riDate {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: rgba(33, 40, 68, 0.35);
+  width: 70px;
+}
+
+.riTitle {
+  font-size: 13px;
+  color: var(--c-navy);
+  flex: 1;
+}
+
+.riScore {
+  font-family: var(--font-display);
+  font-size: 14px;
+}

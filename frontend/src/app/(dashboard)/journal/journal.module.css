@@ -1,0 +1,267 @@
+.journalBody {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  overflow: hidden;
+  height: calc(100vh - 52px); /* Correct height for the body content */
+}
+
+/* SIDEBAR (already from dashboard.module.css? We can reuse parts) */
+
+/* MAIN EDITOR */
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--c-cream);
+}
+
+.editorState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editorToolbar {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid rgba(33, 40, 68, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+}
+
+.etLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.etDate {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(33, 40, 68, 0.4);
+}
+
+.etStatus {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.etStatusDraft { background: rgba(228, 160, 0, 0.12); color: #7a6000; }
+.etStatusSaving { background: rgba(32, 129, 195, 0.1); color: #145585; }
+.etStatusSaved { background: rgba(168, 198, 117, 0.15); color: #3a5a10; }
+
+.etRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnFormat {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(33, 40, 68, 0.12);
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(33, 40, 68, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.btnFormat:hover { border-color: rgba(33, 40, 68, 0.3); color: var(--c-navy); }
+
+.editorArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 3rem;
+}
+
+.editorContent {
+  min-height: 300px;
+  outline: none;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--c-navy);
+}
+
+.charCount {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: rgba(33, 40, 68, 0.25);
+  text-align: right;
+  padding: 0.5rem 3rem 1rem;
+}
+
+/* PROCESSING */
+.processingState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.procSpinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(33, 40, 68, 0.08);
+  border-top-color: var(--c-blue);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.procTitle {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--c-navy);
+}
+
+.procSub {
+  font-size: 13px;
+  color: rgba(33, 40, 68, 0.45);
+}
+
+.procSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
+.procStep {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: rgba(33, 40, 68, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.procStepDone { color: #3a5a10; }
+.procStepActive { color: #145585; }
+
+.procStepDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(33, 40, 68, 0.15);
+  flex-shrink: 0;
+}
+
+.procStepDone .procStepDot { background: var(--c-green); }
+.procStepActive .procStepDot { background: var(--c-blue); animation: pulse 1s ease-in-out infinite; }
+
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* RESULTS */
+.resultState {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.resultToolbar {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid rgba(33, 40, 68, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+}
+
+.resultDate {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(33, 40, 68, 0.4);
+}
+
+.resultBody {
+  padding: 2rem 3rem;
+}
+
+.resultMoodRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.resultNarrative {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--c-navy);
+  margin-bottom: 1.75rem;
+  font-style: italic;
+}
+
+.resultSection {
+  margin-bottom: 1.5rem;
+}
+
+.rsLabel {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(33, 40, 68, 0.35);
+  margin-bottom: 0.6rem;
+}
+
+.entriesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.entryCard {
+  background: white;
+  border: 1px solid rgba(33, 40, 68, 0.08);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+}
+
+.ecType {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(33, 40, 68, 0.35);
+  margin-bottom: 3px;
+}
+
+.ecTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-navy);
+  margin-bottom: 2px;
+}
+
+.ecMeta {
+  font-size: 11px;
+  color: rgba(33, 40, 68, 0.45);
+}
+
+.ecBadge {
+  display: inline-block;
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+}
+
+.ecDone { background: rgba(168, 198, 117, 0.15); color: #3a5a10; }
+.ecPending { background: rgba(228, 160, 0, 0.12); color: #7a6000; }
