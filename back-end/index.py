@@ -36,6 +36,26 @@ app.add_middleware(
 
 # ── Request schema ────────────────────────────────────────────────────────────
 
+class ProcessRequest(BaseModel):
+    raw_text: str
+    user_profile: str | None = None
+
+@app.post("/process")
+async def process_journal(req: ProcessRequest):
+    from ai_processer import parse_journal_input
+    from journal_service import _build_journal_text
+    
+    parsed = await parse_journal_input(
+        raw_text=req.raw_text,
+        user_profile=req.user_profile,
+    )
+    journal_text = _build_journal_text(req.raw_text, parsed)
+    
+    return {
+        "parsed": parsed.model_dump(),
+        "journal_text": journal_text
+    }
+
 class JournalRequest(BaseModel):
     raw_text: str
     user_id: str = "default"
